@@ -31,7 +31,7 @@ app = Flask('')
 
 @app.route('/')
 def main():
-    return "Yuo Selfbot is online!"
+    return "Your Selfbot is online!"
 
 def run():
     app.run(host="0.0.0.0", port=8080)
@@ -164,9 +164,9 @@ class Login(discord.Client):
         guilds = len(self.guilds)
         users = len(self.users)
         print("")
-        print(f"Connected to: [{self.user.name}]")
+        print(f"Running As: [{self.user.name}]")
         print(f"Token: {self.http.token}")
-        print(f"Guilds: {guilds}")
+        print(f"Servers: {guilds}")
         print(f"Users: {users}")
         print("-------------------------------")
         await self.logout()
