@@ -135,11 +135,11 @@ def startprint():
     ██║     ██║  ╚═████║ ██  ██╔╝  ╚════██║██╔══╝  ██║     ██╔══╝  ██╔══██╗██║   ██║   ██║
  ████████╗  ██║    ╚═██║ ████╔╝    ███████║███████╗███████╗██║     ██████╔╝╚██████╔╝   ██║   
  ╚═══════╝  ╚═╝      ╚═╝ ╚═══╝     ╚══════╝╚══════╝╚══════╝╚═╝     ╚═════╝  ╚═════╝    ╚═╝    
-                       {Fore.CYAN}Arsky v{SELFBOT.__version__} | {Fore.CYAN}Logged in as: {Arsky.user.name}#{Arsky.user.discriminator} {Fore.CYAN}| ID: {Fore.CYAN}{Arsky.user.id}   
+                       {Fore.CYAN}IND v{SELFBOT.__version__} | {Fore.CYAN}Logged in as: {IND.user.name}#{IND.user.discriminator} {Fore.CYAN}| ID: {Fore.CYAN}{IND.user.id}   
                        {Fore.CYAN}Nitro Sniper | {Fore.CYAN}{nitro}
-                       {Fore.CYAN}Cached Users: {Fore.CYAN}{len(Arsky.users)}
-                       {Fore.CYAN}Guilds: {Fore.CYAN}{len(Arsky.guilds)}
-                       {Fore.CYAN}Prefix: {Fore.CYAN}{Arsky.command_prefix}
+                       {Fore.CYAN}Cached Users: {Fore.CYAN}{len(IND.users)}
+                       {Fore.CYAN}Guilds: {Fore.CYAN}{len(IND.guilds)}
+                       {Fore.CYAN}Prefix: {Fore.CYAN}{IND.command_prefix}
     ''' + Fore.RESET)
 
 
@@ -152,8 +152,8 @@ Clear()
 def Init():
     token = config.get('token')
     try:
-        Arsky.run(token, bot=False, reconnect=True)
-        os.system(f'title (Kilex Selfbot) - Version {SELFBOT.__version__}')
+        IND.run(token, bot=False, reconnect=True)
+        os.system(f'title (IND Selfbot) - Version {SELFBOT.__version__}')
     except discord.errors.LoginFailure:
         print(f"{Fore.RED}[ERROR] {Fore.YELLOW}Improper token has been passed" + Fore.RESET)
         os.system('pause >NUL')
@@ -260,9 +260,9 @@ async def on_message_edit(before, after):
     await IND.process_commands(after)
 
 
-@Arsky.event
+@IND.event
 async def on_message(message):
-    if Arsky.copycat is not None and Arsky.copycat.id == message.author.id:
+    if IND.copycat is not None and IND.copycat.id == message.author.id:
         await message.channel.send(chr(173) + message.content)
 
     def GiveawayData():
@@ -321,7 +321,7 @@ async def on_message(message):
             return
 
     if 'Someone just dropped' in message.content:
-        if Exeter.slotbot_sniper:
+        if IND.slotbot_sniper:
             if message.author.id == 346353957029019648:
                 try:
                     await message.channel.send('~grab')
@@ -336,7 +336,7 @@ async def on_message(message):
             return
 
     if 'GIVEAWAY' in message.content:
-        if Exeter.giveaway_sniper:
+        if IND.giveaway_sniper:
             if message.author.id == 294882584201003009:
                 try:
                     await message.add_reaction("🎉")
@@ -350,8 +350,8 @@ async def on_message(message):
         else:
             return
 
-    if f'Congratulations <@{Arsky.user.id}>' in message.content:
-        if Arsky.giveaway_sniper:
+    if f'Congratulations <@{IND.user.id}>' in message.content:
+        if IND.giveaway_sniper:
             if message.author.id == 294882584201003009:
                 print(""
                       f"\n{Fore.CYAN}[{time} - Giveaway Won]" + Fore.RESET)
@@ -359,187 +359,187 @@ async def on_message(message):
         else:
             return
 
-    await Arsky.process_commands(message)
+    await IND.process_commands(message)
 
 
 
 
 
-@Arsky.event
+@IND.event
 async def on_member_ban(guild: discord.Guild, user: discord.user):
-    if Arsky.antiraid is True:
+    if IND.antiraid is True:
         try:
             async for i in guild.audit_logs(limit=1, action=discord.AuditLogAction.ban):
-                if guild.id in Arsky.whitelisted_users.keys() and i.user.id in Arsky.whitelisted_users[
-                    guild.id].keys() and i.user.id is not Arsky.user.id:
+                if guild.id in IND.whitelisted_users.keys() and i.user.id in IND.whitelisted_users[
+                    guild.id].keys() and i.user.id is not IND.user.id:
                     print("not banned - " + i.user.name)
                 else:
                     print("banned - " + i.user.name)
-                    await guild.ban(i.user, reason="Exeter Anti-Nuke")
+                    await guild.ban(i.user, reason="IND Anti-Nuke")
         except Exception as e:
             print(e)
 
 
-@Arsky.event
+@IND.event
 async def on_member_join(member):
-    if Exeter.antiraid is True and member.bot:
+    if IND.antiraid is True and member.bot:
         try:
             guild = member.guild
             async for i in guild.audit_logs(limit=1, action=discord.AuditLogAction.bot_add):
-                if member.guild.id in Exeter.whitelisted_users.keys() and i.user.id in Exeter.whitelisted_users[
+                if member.guild.id in IND.whitelisted_users.keys() and i.user.id in IND.whitelisted_users[
                     member.guild.id].keys():
                     return
                 else:
-                    await guild.ban(member, reason="Exeter Anti-Nuke")
-                    await guild.ban(i.user, reason="Exeter Anti-Nuke")
+                    await guild.ban(member, reason="IND Anti-Nuke")
+                    await guild.ban(i.user, reason="IND Anti-Nuke")
         except Exception as e:
             print(e)
 
 
-@Arsky.event
+@IND.event
 async def on_member_remove(member):
-    if Arsky.antiraid is True:
+    if IND.antiraid is True:
         try:
             guild = member.guild
             async for i in guild.audit_logs(limit=1, action=discord.AuditLogAction.kick):
-                if guild.id in Arsky.whitelisted_users.keys() and i.user.id in Arsky.whitelisted_users[
-                    guild.id].keys() and i.user.id is not Exeter.user.id:
+                if guild.id in IND.whitelisted_users.keys() and i.user.id in IND.whitelisted_users[
+                    guild.id].keys() and i.user.id is not IND.user.id:
                     print('not banned')
                 else:
                     print('banned')
-                    await guild.ban(i.user, reason="Arsky Anti-Nuke")
+                    await guild.ban(i.user, reason="IND Anti-Nuke")
         except Exception as e:
             print(e)
 
 
-@Arsky.command(aliases=["queue"])
+@IND.command(aliases=["queue"])
 async def play(ctx, *, query):
     await ctx.message.delete()
-    voice = get(Arsky.voice_clients, guild=ctx.guild)
+    voice = get(IND.voice_clients, guild=ctx.guild)
     if voice and voice.is_connected():
         voice.play('song.mp3')
     else:
         await ctx.send('You need to be a in VC to play music')
 
 
-@Arsky.command()
+@IND.command()
 async def stop(ctx):
     await ctx.message.delete()
     await ctx.send("Stopped the music player!")
 
 
-@Arsky.command()
+@IND.command()
 async def skip(ctx):
     await ctx.message.delete()
     await ctx.send("Skipped song!")
 
 
-@Arsky.command(aliases=["lyric"])
+@IND.command(aliases=["lyric"])
 async def lyrics(ctx, *, args):
     await ctx.message.delete()
     await ctx.send("Showing lyrics for " + args)
 
 
-@Arsky.command(aliases=[])
+@IND.command(aliases=[])
 async def msgsniper(ctx, msgsniperlol=None):
     await ctx.message.delete()
     if str(msgsniperlol).lower() == 'true' or str(msgsniperlol).lower() == 'on':
-        Arsky.msgsniper = True
-        await ctx.send('Arsky Message-Sniper is now **enabled**')
+        IND.msgsniper = True
+        await ctx.send('IND Message-Sniper is now **enabled**')
     elif str(msgsniperlol).lower() == 'false' or str(msgsniperlol).lower() == 'off':
-        Exeter.msgsniper = False
-        await ctx.send('Arsky Message-Sniper is now **disabled**')
+        IND.msgsniper = False
+        await ctx.send('IND Message-Sniper is now **disabled**')
 
 
-@Arsky.command(aliases=['ar', 'antiraid'])
+@IND.command(aliases=['ar', 'antiraid'])
 async def antinuke(ctx, antiraidparameter=None):
     await ctx.message.delete()
-    Exeter.antiraid = False
+    IND.antiraid = False
     if str(antiraidparameter).lower() == 'true' or str(antiraidparameter).lower() == 'on':
-        Arsky.antiraid = True
+        IND.antiraid = True
         await ctx.send('Anti-Nuke is now **enabled**')
     elif str(antiraidparameter).lower() == 'false' or str(antiraidparameter).lower() == 'off':
-        Arsky.antiraid = False
+        IND.antiraid = False
         await ctx.send('Anti-Nuke is now **disabled**')
 
 
-@Arsky.command(aliases=['wl'])
+@IND.command(aliases=['wl'])
 async def whitelist(ctx, user: discord.Member = None):
     await ctx.message.delete()
     if user is None:
         await ctx.send("Please specify a user to whitelist")
     else:
-        if ctx.guild.id not in Arsky.whitelisted_users.keys():
-            Arsky.whitelisted_users[ctx.guild.id] = {}
-        if user.id in Arsky.whitelisted_users[ctx.guild.id]:
+        if ctx.guild.id not in IND.whitelisted_users.keys():
+            IND.whitelisted_users[ctx.guild.id] = {}
+        if user.id in IND.whitelisted_users[ctx.guild.id]:
             await ctx.send('That user is already whitelisted')
         else:
-            Exeter.whitelisted_users[ctx.guild.id][user.id] = 0
+            IND.whitelisted_users[ctx.guild.id][user.id] = 0
             await ctx.send("Whitelisted **" + user.name.replace("*", "\*").replace("`", "\`").replace("_",
                                                                                                       "\_") + "#" + user.discriminator + "**")
     # else:
-    #     user = Arsky.get_user(id)
+    #     user = IND.get_user(id)
     #     if user is None:
     #         await ctx.send("Couldn't find that user")
     #         return
-    #     if ctx.guild.id not in Arsky.whitelisted_users.keys():
-    #         Arsky.whitelisted_users[ctx.guild.id] = {}
-    #     if user.id in Arsky.whitelisted_users[ctx.guild.id]:
+    #     if ctx.guild.id not in IND.whitelisted_users.keys():
+    #         IND.whitelisted_users[ctx.guild.id] = {}
+    #     if user.id in IND.whitelisted_users[ctx.guild.id]:
     #         await ctx.send('That user is already whitelisted')
     #     else:
-    #         Arsky.whitelisted_users[ctx.guild.id][user.id] = 0
+    #         IND.whitelisted_users[ctx.guild.id][user.id] = 0
     #         await ctx.send("Whitelisted **" + user.name.replace("*", "\*").replace("`", "\`").replace("_","\_") + "#" + user.discriminator + "**")
 
 
-@Arsky.command(aliases=['wld'])
+@IND.command(aliases=['wld'])
 async def whitelisted(ctx, g=None):
     await ctx.message.delete()
     if g == '-g' or g == '-global':
         whitelist = '`All Whitelisted Users:`\n'
-        for key in Arsky.whitelisted_users:
-            for key2 in Arsky.whitelisted_users[key]:
-                user = Arsky.get_user(key2)
+        for key in IND.whitelisted_users:
+            for key2 in IND.whitelisted_users[key]:
+                user = IND.get_user(key2)
                 whitelist += '**+ ' + user.name.replace('*', "\*").replace('`', "\`").replace('_',
-                                                                                              "\_") + "#" + user.discriminator + "** - " + Exeter.get_guild(
+                                                                                              "\_") + "#" + user.discriminator + "** - " + IND.get_guild(
                     key).name.replace('*', "\*").replace('`', "\`").replace('_', "\_") + "" + "\n"
         await ctx.send(whitelist)
     else:
         whitelist = "`" + ctx.guild.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                        "\_") + '\'s Whitelisted Users:`\n'
-        for key in Arsky.whitelisted_users:
+        for key in IND.whitelisted_users:
             if key == ctx.guild.id:
-                for key2 in Arsky.whitelisted_users[ctx.guild.id]:
-                    user = Arsky.get_user(key2)
+                for key2 in IND.whitelisted_users[ctx.guild.id]:
+                    user = IND.get_user(key2)
                     whitelist += '**+ ' + user.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                                   "\_") + "#" + user.discriminator + " (" + str(
                         user.id) + ")" + "**\n"
         await ctx.send(whitelist)
 
 
-@Arsky.command(aliases=['uwl'])
+@IND.command(aliases=['uwl'])
 async def unwhitelist(ctx, user: discord.Member = None):
     if user is None:
         await ctx.send("Please specify the user you would like to unwhitelist")
     else:
-        if ctx.guild.id not in Exeter.whitelisted_users.keys():
+        if ctx.guild.id not in IND.whitelisted_users.keys():
             await ctx.send("That user is not whitelisted")
             return
-        if user.id in Exeter.whitelisted_users[ctx.guild.id]:
-            Exeter.whitelisted_users[ctx.guild.id].pop(user.id, 0)
-            user2 = Exeter.get_user(user.id)
+        if user.id in IND.whitelisted_users[ctx.guild.id]:
+            IND.whitelisted_users[ctx.guild.id].pop(user.id, 0)
+            user2 = IND.get_user(user.id)
             await ctx.send(
                 'Successfully unwhitelisted **' + user2.name.replace('*', "\*").replace('`', "\`").replace('_',
                                                                                                            "\_") + '#' + user2.discriminator + '**')
 
 
-@Arsky.command(aliases=['clearwl', 'clearwld'])
+@IND.command(aliases=['clearwl', 'clearwld'])
 async def clearwhitelist(ctx):
     await ctx.message.delete()
-    Arsky.whitelisted_users.clear()
+    IND.whitelisted_users.clear()
     await ctx.send('Successfully cleared the whitelist hash')
 
 
-@Arsky.command()
+@IND.command()
 async def yuikiss(ctx, user: discord.User = None):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.DMChannel) or isinstance(ctx.message.channel, discord.GroupChannel):
@@ -548,17 +548,17 @@ async def yuikiss(ctx, user: discord.User = None):
         if user is None:
             await ctx.send("Please specify a user to Yui Kiss", delete_after=3)
             return
-        Arsky.yui_kiss_user = user.id
-        Arsky.yui_kiss_channel = ctx.channel.id
-        if Arsky.yui_kiss_user is None or Arsky.yui_kiss_channel is None:
+        IND.yui_kiss_user = user.id
+        IND.yui_kiss_channel = ctx.channel.id
+        if IND.yui_kiss_user is None or IND.yui_kiss_channel is None:
             await ctx.send('An impossible error occured, try again later or contact swag')
             return
-        while Arsky.yui_kiss_user is not None and Arsky.yui_kiss_channel is not None:
-            await Arsky.get_channel(Arsky.yui_kiss_channel).send('yui kiss ' + str(Arsky.yui_kiss_user), delete_after=0.1)
+        while IND.yui_kiss_user is not None and IND.yui_kiss_channel is not None:
+            await IND.get_channel(IND.yui_kiss_channel).send('yui kiss ' + str(IND.yui_kiss_user), delete_after=0.1)
             await asyncio.sleep(60)
 
 
-@Arsky.command()
+@IND.command()
 async def yuihug(ctx, user: discord.User = None):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.DMChannel) or isinstance(ctx.message.channel, discord.GroupChannel):
@@ -567,25 +567,25 @@ async def yuihug(ctx, user: discord.User = None):
         if user is None:
             await ctx.send("Please specify a user to Yui Hug", delete_after=3)
             return
-        Arsky.yui_hug_user = user.id
-        Arsky.yui_hug_channel = ctx.channel.id
-        if Arsky.yui_hug_user is None or Arsky.yui_hug_channel is None:
+        IND.yui_hug_user = user.id
+        IND.yui_hug_channel = ctx.channel.id
+        if IND.yui_hug_user is None or IND.yui_hug_channel is None:
             await ctx.send('An impossible error occured, try again later or contact swag')
             return
-        while Exeter.yui_hug_user is not None and Exeter.yui_hug_channel is not None:
-            await Exeter.get_channel(Exeter.yui_hug_channel).send('yui hug ' + str(Exeter.yui_hug_user), delete_after=0.1)
+        while IND.yui_hug_user is not None and IND.yui_hug_channel is not None:
+            await IND.get_channel(IND.yui_hug_channel).send('yui hug ' + str(IND.yui_hug_user), delete_after=0.1)
             await asyncio.sleep(60)
 
-@Arsky.command()
+@IND.command()
 async def yuistop(ctx):
     await ctx.message.delete()
-    Arsky.yui_kiss_user = None
-    Arsky.yui_kiss_channel = None
-    Arsky.yui_hug_user = None
-    Arsky.yui_hug_channel = None
+    IND.yui_kiss_user = None
+    IND.yui_kiss_channel = None
+    IND.yui_hug_user = None
+    IND.yui_hug_channel = None
     await ctx.send('Successfully **disabled** Yui Loops', delete_after=3)
 
-@Arsky.command(aliases=["automee6"])
+@IND.command(aliases=["automee6"])
 async def mee6(ctx, param=None):
     await ctx.message.delete()
     if param is None:
@@ -596,13 +596,13 @@ async def mee6(ctx, param=None):
             await ctx.send("You can't bind Auto-MEE6 to a DM or GC", delete_after=3)
             return
         else:
-            Arsky.mee6 = True
+            IND.mee6 = True
             await ctx.send("Auto-MEE6 Successfully bound to `" + ctx.channel.name + "`", delete_after=3)
-            Exeter.mee6_channel = ctx.channel.id
+            IND.mee6_channel = ctx.channel.id
     elif str(param).lower() == 'false' or str(param).lower() == 'off':
-        Exeter.mee6 = False
+        IND.mee6 = False
         await ctx.send("Auto-MEE6 Successfully **disabled**", delete_after=3)
-    while Arsky.mee6 is True:
+    while IND.mee6 is True:
         sentences = ['Stop waiting for exceptional things to just happen.',
                      'The lyrics of the song sounded like fingernails on a chalkboard.',
                      'I checked to make sure that he was still alive.', 'We need to rent a room for our party.',
@@ -649,35 +649,35 @@ async def mee6(ctx, param=None):
                      'It\'s difficult to understand the lengths he\'d go to remain short.',
                      'Nobody questions who built the pyramids in Mexico.',
                      'They ran around the corner to find that they had traveled back in time.']
-        await Arsky.get_channel(Arsky.mee6_channel).send(random.choice(sentences), delete_after=0.1)
+        await IND.get_channel(IND.mee6_channel).send(random.choice(sentences), delete_after=0.1)
         await asyncio.sleep(60)
 
 
-@Arsky.command(aliases=['slotsniper', "slotbotsniper"])
+@IND.command(aliases=['slotsniper', "slotbotsniper"])
 async def slotbot(ctx, param=None):
     await ctx.message.delete()
-    Arsky.slotbot_sniper = False
+    IND.slotbot_sniper = False
     if str(param).lower() == 'true' or str(param).lower() == 'on':
-        Arsky.slotbot_sniper = True
+        IND.slotbot_sniper = True
     elif str(param).lower() == 'false' or str(param).lower() == 'off':
-        Arsky.slotbot_sniper = False
+        IND.slotbot_sniper = False
 
 
-@Arsky.command(aliases=['giveawaysniper'])
+@IND.command(aliases=['giveawaysniper'])
 async def giveaway(ctx, param=None):
     await ctx.message.delete()
-    Arsky.giveaway_sniper = False
+    IND.giveaway_sniper = False
     if str(param).lower() == 'true' or str(param).lower() == 'on':
-        Arsky.giveaway_sniper = True
+        IND.giveaway_sniper = True
     elif str(param).lower() == 'false' or str(param).lower() == 'off':
-        Arsky.giveaway_sniper = False
+        IND.giveaway_sniper = False
 
 
-@Arsky.event
+@IND.event
 async def on_message_delete(message):
-    if message.author.id == Arsky.user.id:
+    if message.author.id == IND.user.id:
         return
-    if Arsky.msgsniper:
+    if IND.msgsniper:
         if isinstance(message.channel, discord.DMChannel) or isinstance(message.channel, discord.GroupChannel):
             attachments = message.attachments
             if len(attachments) == 0:
@@ -692,14 +692,14 @@ async def on_message_delete(message):
                     discord.utils.escape_markdown(str(message.author))) + "`: " + discord.utils.escape_mentions(
                     message.content) + "\n\n**Attachments:**\n" + links
                 await message.channel.send(message_content)
-    if len(Arsky.sniped_message_dict) > 1000:
-        Arsky.sniped_message_dict.clear()
+    if len(IND.sniped_message_dict) > 1000:
+        IND.sniped_message_dict.clear()
     attachments = message.attachments
     if len(attachments) == 0:
         channel_id = message.channel.id
         message_content = "`" + str(discord.utils.escape_markdown(str(message.author))) + "`: " + str(
             message.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
-        Arsky.sniped_message_dict.update({channel_id: message_content})
+        IND.sniped_message_dict.update({channel_id: message_content})
     else:
         links = ""
         for attachment in attachments:
@@ -708,14 +708,14 @@ async def on_message_delete(message):
         message_content = "`" + str(
             discord.utils.escape_markdown(str(message.author))) + "`: " + discord.utils.escape_mentions(
             message.content) + "\n\n**Attachments:**\n" + links
-        Arsky.sniped_message_dict.update({channel_id: message_content})
+        IND.sniped_message_dict.update({channel_id: message_content})
 
 
-@Arsky.event
+@IND.event
 async def on_message_edit(before, after):
-    if before.author.id == Arsky.user.id:
+    if before.author.id == IND.user.id:
         return
-    if Arsky.msgsniper:
+    if IND.msgsniper:
         if before.content is after.content:
             return
         if isinstance(before.channel, discord.DMChannel) or isinstance(before.channel, discord.GroupChannel):
@@ -735,8 +735,8 @@ async def on_message_edit(before, after):
                     discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
                     before.content) + "\n\n**Attachments:**\n" + links
                 await before.channel.send(message_content)
-    if len(Arsky.sniped_edited_message_dict) > 1000:
-        Arsky.sniped_edited_message_dict.clear()
+    if len(IND.sniped_edited_message_dict) > 1000:
+        IND.sniped_edited_message_dict.clear()
     attachments = before.attachments
     if len(attachments) == 0:
         channel_id = before.channel.id
@@ -744,7 +744,7 @@ async def on_message_edit(before, after):
             before.content).replace("@everyone", "@\u200beveryone").replace("@here",
                                                                             "@\u200bhere") + "\n**AFTER**\n" + str(
             after.content).replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
-        Arsky.sniped_edited_message_dict.update({channel_id: message_content})
+        IND.sniped_edited_message_dict.update({channel_id: message_content})
     else:
         links = ""
         for attachment in attachments:
@@ -753,37 +753,37 @@ async def on_message_edit(before, after):
         message_content = "`" + str(
             discord.utils.escape_markdown(str(before.author))) + "`: " + discord.utils.escape_mentions(
             before.content) + "\n\n**Attachments:**\n" + links
-        Arsky.sniped_edited_message_dict.update({channel_id: message_content})
+        IND.sniped_edited_message_dict.update({channel_id: message_content})
 
 
-@Arsky.command()
+@IND.command()
 async def snipe(ctx):
     await ctx.message.delete()
     currentChannel = ctx.channel.id
-    if currentChannel in Arsky.sniped_message_dict:
-        await ctx.send(Arsky.sniped_message_dict[currentChannel])
+    if currentChannel in IND.sniped_message_dict:
+        await ctx.send(IND.sniped_message_dict[currentChannel])
     else:
         await ctx.send("No message to snipe!")
 
 
-@Arsky.command(aliases=["esnipe"])
+@IND.command(aliases=["esnipe"])
 async def editsnipe(ctx):
     await ctx.message.delete()
     currentChannel = ctx.channel.id
-    if currentChannel in Arsky.sniped_edited_message_dict:
-        await ctx.send(Arsky.sniped_edited_message_dict[currentChannel])
+    if currentChannel in IND.sniped_edited_message_dict:
+        await ctx.send(IND.sniped_edited_message_dict[currentChannel])
     else:
         await ctx.send("No message to snipe!")
 
 
-@Arsky.command()
+@IND.command()
 async def adminservers(ctx):
     await ctx.message.delete()
     admins = []
     bots = []
     kicks = []
     bans = []
-    for guild in Arsky.guilds:
+    for guild in IND.guilds:
         if guild.me.guild_permissions.administrator:
             admins.append(discord.utils.escape_markdown(guild.name))
         if guild.me.guild_permissions.manage_guild and not guild.me.guild_permissions.administrator:
@@ -799,7 +799,7 @@ async def adminservers(ctx):
     await ctx.send(adminPermServers + botPermServers + banPermServers + kickPermServers)
 
 
-@Arsky.command()
+@IND.command()
 async def bots(ctx):
     await ctx.message.delete()
     bots = []
@@ -811,14 +811,14 @@ async def bots(ctx):
     await ctx.send(bottiez)
 
 
-@Arsky.command()
+@IND.command()
 async def help(ctx, category=None):
     await ctx.message.delete()
     if category is None:
         embed = discord.Embed(color=0xFF633B, timestamp=ctx.message.created_at)
-        embed.set_author(name="Kilex | 𝙋𝙍𝙀𝙁𝙄𝙓: " + str(Arsky.command_prefix),
-                         icon_url=Arsky.user.avatar_url)
-        embed.set_thumbnail(url=Arsky.user.avatar_url)
+        embed.set_author(name="IND SELFBOT v | 𝙋𝙍𝙀𝙁𝙄𝙓: " + str(IND.command_prefix),
+                         icon_url=IND.user.avatar_url)
+        embed.set_thumbnail(url=IND.user.avatar_url)
         embed.set_image(url="https://media.discordapp.net/attachments/789202406000033872/790317974863085578/image0.gif?width=320&height=180")
         embed.add_field(name="\uD83E\uDDCA `COMMON`", value="Shows all common commands", inline=False)
         embed.add_field(name="\uD83E\uDDCA `ACCOUNT`", value="Shows all account commands", inline=False)
@@ -830,20 +830,20 @@ async def help(ctx, category=None):
         embed.add_field(name="\uD83E\uDDCA `ANTI-WIZZ`", value="Shows all anti-wizz commands", inline=False)
         embed.add_field(name="\uD83E\uDDCA `WIZZ`", value="Shows all wizz commands", inline=False)
         await ctx.send(embed=embed)
-    elif str(category).lower() == "arsky":
+    elif str(category).lower() == "common":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
         embed.set_image(url="https://media.discordapp.net/attachments/697225400505598044/783140740824956958/image0.gif?width=540&height=304")
-        embed.description = f"\uD83D\uDCB0 `ARSKY COMMANDS`\n`> help <category>` - returns all commands of that category\n`> uptime` - return how long the selfbot has been running\n`> prefix <prefix>` - changes the bot's prefix\n`> ping` - returns the bot's latency\n`> av <user>` - returns the user's pfp\n`> whois <user>` - returns user's account info\n`> tokeninfo <token>` - returns information about the token\n`> copyserver` - makes a copy of the server\n`> rainbowrole <role>` - makes the role a rainbow role (ratelimits)\n`> serverinfo` - gets information about the server\n`> serverpfp` - returns the server's icon\n`> banner` - returns the server's banner\n`> shutdown` - shutsdown the selfbot\n"
+        embed.description = f"\uD83D\uDCB0 `COMMON COMMANDS`\n`> help <category>` - returns all commands of that category\n`> uptime` - return how long the selfbot has been running\n`> prefix <prefix>` - changes the bot's prefix\n`> ping` - returns the bot's latency\n`> av <user>` - returns the user's pfp\n`> whois <user>` - returns user's account info\n`> tokeninfo <token>` - returns information about the token\n`> copyserver` - makes a copy of the server\n`> rainbowrole <role>` - makes the role a rainbow role (ratelimits)\n`> serverinfo` - gets information about the server\n`> serverpfp` - returns the server's icon\n`> banner` - returns the server's banner\n`> shutdown` - shutsdown the selfbot\n"
         await ctx.send(embed=embed)
     elif str(category).lower() == "account":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
         embed.set_image(url="https://media.discordapp.net/attachments/697225400505598044/783144406889922580/image0.gif?width=540&height=227")
-        embed.description = f"\uD83D\uDCB0 `ACCOUNT COMMANDS`\n`> ghost` - makes your name and pfp invisible\n`> pfpsteal <user>` - steals the users pfp\n`> setpfp <link>` - sets the image-link as your pfp\n`> hypesquad <hypesquad>` - changes your current hypesquad\n`> spoofcon <type> <name>` - spoofs your discord connection\n`> leavegroups` - leaves all groups that you're in\n`> cyclenick <text>` - cycles through your nickname by letter\n`> stopcyclenick` - stops cycling your nickname\n`> stream <status>` - sets your streaming status\n`> playing <status>` - sets your playing status\n`> listening <status>` - sets your listening status\n`> watching <status>` - sets your watching status\n`> stopactivity` - resets your status-activity\n`> acceptfriends` - accepts all friend requests\n`> delfriends` - removes all your friends\n`> ignorefriends` - ignores all friends requests\n`> clearblocked` - clears your block-list\n`> read` - marks all messages as read\n`> leavegc` - leaves the current groupchat\n`> adminservers` - lists all servers you have perms in\n`> slotbot <on/off>` - snipes slotbots ({Arsky.slotbot_sniper})\n`> giveaway <on/off>` - snipes giveaways ({Arsky.giveaway_sniper})\n`> mee6 <on/off>` - auto sends messages in the specified channel ({Arsky.mee6}) <#{Arsky.mee6_channel}>\n`> yuikiss <user>` - auto sends yui kisses every minute <@{Arsky.yui_kiss_user}> <#{Arsky.yui_kiss_channel}>\n`> yuihug <user>` - auto sends yui hugs every minute <@{Arsky.yui_hug_user}> <#{Arsky.yui_hug_channel}>\n`> yuistop` - stops any running yui loops"
+        embed.description = f"\uD83D\uDCB0 `ACCOUNT COMMANDS`\n`> ghost` - makes your name and pfp invisible\n`> pfpsteal <user>` - steals the users pfp\n`> setpfp <link>` - sets the image-link as your pfp\n`> hypesquad <hypesquad>` - changes your current hypesquad\n`> spoofcon <type> <name>` - spoofs your discord connection\n`> leavegroups` - leaves all groups that you're in\n`> cyclenick <text>` - cycles through your nickname by letter\n`> stopcyclenick` - stops cycling your nickname\n`> stream <status>` - sets your streaming status\n`> playing <status>` - sets your playing status\n`> listening <status>` - sets your listening status\n`> watching <status>` - sets your watching status\n`> stopactivity` - resets your status-activity\n`> acceptfriends` - accepts all friend requests\n`> delfriends` - removes all your friends\n`> ignorefriends` - ignores all friends requests\n`> clearblocked` - clears your block-list\n`> read` - marks all messages as read\n`> leavegc` - leaves the current groupchat\n`> adminservers` - lists all servers you have perms in\n`> slotbot <on/off>` - snipes slotbots ({IND.slotbot_sniper})\n`> giveaway <on/off>` - snipes giveaways ({IND.giveaway_sniper})\n`> mee6 <on/off>` - auto sends messages in the specified channel ({IND.mee6}) <#{IND.mee6_channel}>\n`> yuikiss <user>` - auto sends yui kisses every minute <@{IND.yui_kiss_user}> <#{IND.yui_kiss_channel}>\n`> yuihug <user>` - auto sends yui hugs every minute <@{IND.yui_hug_user}> <#{IND.yui_hug_channel}>\n`> yuistop` - stops any running yui loops"
         await ctx.send(embed=embed)
     elif str(category).lower() == "text":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
         embed.set_image(url="https://images-ext-1.discordapp.net/external/F9zXdDpYU-I6szIvf-eEuKQ4pUBXOK92kgIj0Bygusw/https/media.discordapp.net/attachments/760116404107870228/778236394811555840/20201116_215459.gif?width=432&height=394")
-        embed.description = f"\uD83D\uDCB0 `TEXT COMMANDS`\n`> Arsky` - sends the Arsky logo\n`> snipe` - shows the last deleted message\n`> editsnipe` - shows the last edited message\n`> msgsniper <on/off> ({Arsky.msgsniper})` - enables a message sniper for deleted messages in DMs\n`> clear` - sends a large message filled with invisible unicode\n`> del <message>` - sends a message and deletes it instantly\n`> 1337speak <message>` - talk like a hacker\n`> minesweeper` - play a game of minesweeper\n`> spam <amount>` - spams a message\n`> dm <user> <content>` - dms a user a message\n`> reverse <message>` - sends the message but in reverse-order\n`> shrug` - returns ¯\_(ツ)_/¯\n`> lenny` - returns ( ͡° ͜ʖ ͡°)\n`> fliptable` - returns (╯°□°）╯︵ ┻━┻\n`> unflip` - returns (╯°□°）╯︵ ┻━┻\n`> bold <message>` - bolds the message\n`> censor <message>` - censors the message\n`> underline <message>` - underlines the message\n`> italicize <message>` - italicizes the message\n`> strike <message>` - strikethroughs the message\n`> quote <message>` - quotes the message\n`> code <message>` - applies code formatting to the message\n`> purge <amount>` - purges the amount of messages\n`> empty` - sends an empty message\n`> tts <content>` - returns an mp4 file of your content\n`> firstmsg` - shows the first message in the channel history\n`> ascii <message>` - creates an ASCII art of your message\n`> wizz` - makes a prank message about wizzing \n`> 8ball <question>` - returns an 8ball answer\n`> slots` - play the slot machine\n`> everyone` - pings everyone through a link\n`> abc` - cyles through the alphabet\n`> 100` - cycles -100\n`> cum` - makes you cum lol?\n`> 9/11` - sends a 9/11 attack\n`> massreact <emoji>` - mass reacts with the specified emoji"
+        embed.description = f"\uD83D\uDCB0 `TEXT COMMANDS`\n`> IND` - sends the IND logo\n`> snipe` - shows the last deleted message\n`> editsnipe` - shows the last edited message\n`> msgsniper <on/off> ({IND.msgsniper})` - enables a message sniper for deleted messages in DMs\n`> clear` - sends a large message filled with invisible unicode\n`> del <message>` - sends a message and deletes it instantly\n`> 1337speak <message>` - talk like a hacker\n`> minesweeper` - play a game of minesweeper\n`> spam <amount>` - spams a message\n`> dm <user> <content>` - dms a user a message\n`> reverse <message>` - sends the message but in reverse-order\n`> shrug` - returns ¯\_(ツ)_/¯\n`> lenny` - returns ( ͡° ͜ʖ ͡°)\n`> fliptable` - returns (╯°□°）╯︵ ┻━┻\n`> unflip` - returns (╯°□°）╯︵ ┻━┻\n`> bold <message>` - bolds the message\n`> censor <message>` - censors the message\n`> underline <message>` - underlines the message\n`> italicize <message>` - italicizes the message\n`> strike <message>` - strikethroughs the message\n`> quote <message>` - quotes the message\n`> code <message>` - applies code formatting to the message\n`> purge <amount>` - purges the amount of messages\n`> empty` - sends an empty message\n`> tts <content>` - returns an mp4 file of your content\n`> firstmsg` - shows the first message in the channel history\n`> ascii <message>` - creates an ASCII art of your message\n`> wizz` - makes a prank message about wizzing \n`> 8ball <question>` - returns an 8ball answer\n`> slots` - play the slot machine\n`> everyone` - pings everyone through a link\n`> abc` - cyles through the alphabet\n`> 100` - cycles -100\n`> cum` - makes you cum lol?\n`> 9/11` - sends a 9/11 attack\n`> massreact <emoji>` - mass reacts with the specified emoji"
         await ctx.send(embed=embed)
     elif str(category).lower() == "Rap":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
@@ -864,12 +864,12 @@ async def help(ctx, category=None):
     elif str(category).lower() == "misc":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
         embed.set_image(url="https://cdn.discordapp.com/attachments/723250694118965300/723265016979259544/image0.gif")
-        embed.description = f"\uD83D\uDCB0 `MISCELLANEOUS COMMANDS`\n`> copycat <user>` - copies the users messages ({Arsky.copycat})\n`> stopcopycat` - stops copycatting\n`> fakename` - makes a fakename with other members's names\n`> geoip <ip>` - looks up the ip's location\n`> pingweb <website-url>` pings a website to see if it's up\n`> anticatfish <user>` - reverse google searches the user's pfp\n`> stealemoji` - <emoji> <name> - steals the specified emoji\n`> hexcolor <hex-code>` - returns the color of the hex-code\n`> dick <user>` - returns the user's dick size\n`> bitcoin` - shows the current bitcoin exchange rate\n`> hastebin <message>` - posts your message to hastebin\n`> rolecolor <role>` - returns the role's color\n`> nitro` - generates a random nitro code\n`> feed <user>` - feeds the user\n`> tickle <user>` - tickles the user\n`> slap <user>` - slaps the user\n`> hug <user>` - hugs the user\n`> cuddle <user>` - cuddles the user\n`> smug <user>` - smugs at the user\n`> pat <user>` - pat the user\n`> kiss <user>` - kiss the user\n`> topic` - sends a conversation starter\n`> wyr` - sends a would you rather\n`> gif <query>` - sends a gif based on the query\n`> sendall <message>` - sends a message in every channel\n`> poll <msg: xyz 1: xyz 2: xyz>` - creates a poll\n`> bots` - shows all bots in the server\n`> image <query>` - returns an image\n`> hack <user>` - hacks the user\n`> token <user>` - returns the user's token\n`> cat` - returns random cat pic\n`> sadcat` - returns a random sad cat\n`> dog` - returns random dog pic\n`> fox` - returns random fox pic\n`> bird` - returns random bird pic\n"
+        embed.description = f"\uD83D\uDCB0 `MISCELLANEOUS COMMANDS`\n`> copycat <user>` - copies the users messages ({IND.copycat})\n`> stopcopycat` - stops copycatting\n`> fakename` - makes a fakename with other members's names\n`> geoip <ip>` - looks up the ip's location\n`> pingweb <website-url>` pings a website to see if it's up\n`> anticatfish <user>` - reverse google searches the user's pfp\n`> stealemoji` - <emoji> <name> - steals the specified emoji\n`> hexcolor <hex-code>` - returns the color of the hex-code\n`> dick <user>` - returns the user's dick size\n`> bitcoin` - shows the current bitcoin exchange rate\n`> hastebin <message>` - posts your message to hastebin\n`> rolecolor <role>` - returns the role's color\n`> nitro` - generates a random nitro code\n`> feed <user>` - feeds the user\n`> tickle <user>` - tickles the user\n`> slap <user>` - slaps the user\n`> hug <user>` - hugs the user\n`> cuddle <user>` - cuddles the user\n`> smug <user>` - smugs at the user\n`> pat <user>` - pat the user\n`> kiss <user>` - kiss the user\n`> topic` - sends a conversation starter\n`> wyr` - sends a would you rather\n`> gif <query>` - sends a gif based on the query\n`> sendall <message>` - sends a message in every channel\n`> poll <msg: xyz 1: xyz 2: xyz>` - creates a poll\n`> bots` - shows all bots in the server\n`> image <query>` - returns an image\n`> hack <user>` - hacks the user\n`> token <user>` - returns the user's token\n`> cat` - returns random cat pic\n`> sadcat` - returns a random sad cat\n`> dog` - returns random dog pic\n`> fox` - returns random fox pic\n`> bird` - returns random bird pic\n"
         await ctx.send(embed=embed)
     elif str(category).lower() == "antiwizz":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
         embed.set_image(url="")
-        embed.description = f"\uD83D\uDCB0 `ANTI-WIZZ COMMANDS`\n`> antiraid <on/off>` - toggles anti-nuke ({Arsky.antiraid})\n`> whitelist <user>` - whitelists the specified user\n**NOTE** Whitelisting a user will completely exclude them from anti-nuke detections, be weary on who you whitelist.\n`> whitelisted <-g>` - see who's whitleisted and in what guild\n`> unwhitelist <user>` - unwhitelists the user\n`> clearwhitelist` - clears the whitelist hash"
+        embed.description = f"\uD83D\uDCB0 `ANTI-WIZZ COMMANDS`\n`> antiraid <on/off>` - toggles anti-nuke ({IND.antiraid})\n`> whitelist <user>` - whitelists the specified user\n**NOTE** Whitelisting a user will completely exclude them from anti-nuke detections, be weary on who you whitelist.\n`> whitelisted <-g>` - see who's whitleisted and in what guild\n`> unwhitelist <user>` - unwhitelists the user\n`> clearwhitelist` - clears the whitelist hash"
         await ctx.send(embed=embed)
     elif str(category).lower() == "wizz":
         embed = discord.Embed(color=random.randrange(0x1000000), timestamp=ctx.message.created_at)
@@ -878,7 +878,7 @@ async def help(ctx, category=None):
         await ctx.send(embed=embed)
 
 
-# Arsky
+# IND
 
 # ACCOUNT
 
@@ -896,8 +896,8 @@ async def help(ctx, category=None):
 # WIZZ
 
 
-@Arsky.command()
-async def exeter(ctx):
+@IND.command()
+async def ind(ctx):
     await ctx.message.delete()
     await ctx.send("""
  ████████   ██       ██║ ████╗     
@@ -909,7 +909,7 @@ async def exeter(ctx):
 """)
 
 
-@Arsky.command(aliases=["giphy", "tenor", "searchgif"])
+@IND.command(aliases=["giphy", "tenor", "searchgif"])
 async def gif(ctx, query=None):
     await ctx.message.delete()
     if query is None:
@@ -924,7 +924,7 @@ async def gif(ctx, query=None):
         await ctx.send(res['data'][0]["url"])
 
 
-@Arsky.command(aliases=["img", "searchimg", "searchimage", "imagesearch", "imgsearch"])
+@IND.command(aliases=["img", "searchimg", "searchimage", "imagesearch", "imgsearch"])
 async def image(ctx, *, args):
     await ctx.message.delete()
     url = 'https://unsplash.com/search/photos/' + args.replace(" ", "%20")
@@ -945,31 +945,31 @@ async def image(ctx, *, args):
         await ctx.send("Nothing found for **" + args + "**")
 
 
-@Arsky.command(aliases=["addemoji", "stealemote", "addemote"])
+@IND.command(aliases=["addemoji", "stealemote", "addemote"])
 async def stealemoji(ctx):
     await ctx.message.delete()
     custom_regex = "<(?P<animated>a?):(?P<name>[a-zA-Z0-9_]{2,32}):(?P<id>[0-9]{18,22})>"
     unicode_regex = "(?:\U0001f1e6[\U0001f1e8-\U0001f1ec\U0001f1ee\U0001f1f1\U0001f1f2\U0001f1f4\U0001f1f6-\U0001f1fa\U0001f1fc\U0001f1fd\U0001f1ff])|(?:\U0001f1e7[\U0001f1e6\U0001f1e7\U0001f1e9-\U0001f1ef\U0001f1f1-\U0001f1f4\U0001f1f6-\U0001f1f9\U0001f1fb\U0001f1fc\U0001f1fe\U0001f1ff])|(?:\U0001f1e8[\U0001f1e6\U0001f1e8\U0001f1e9\U0001f1eb-\U0001f1ee\U0001f1f0-\U0001f1f5\U0001f1f7\U0001f1fa-\U0001f1ff])|(?:\U0001f1e9[\U0001f1ea\U0001f1ec\U0001f1ef\U0001f1f0\U0001f1f2\U0001f1f4\U0001f1ff])|(?:\U0001f1ea[\U0001f1e6\U0001f1e8\U0001f1ea\U0001f1ec\U0001f1ed\U0001f1f7-\U0001f1fa])|(?:\U0001f1eb[\U0001f1ee-\U0001f1f0\U0001f1f2\U0001f1f4\U0001f1f7])|(?:\U0001f1ec[\U0001f1e6\U0001f1e7\U0001f1e9-\U0001f1ee\U0001f1f1-\U0001f1f3\U0001f1f5-\U0001f1fa\U0001f1fc\U0001f1fe])|(?:\U0001f1ed[\U0001f1f0\U0001f1f2\U0001f1f3\U0001f1f7\U0001f1f9\U0001f1fa])|(?:\U0001f1ee[\U0001f1e8-\U0001f1ea\U0001f1f1-\U0001f1f4\U0001f1f6-\U0001f1f9])|(?:\U0001f1ef[\U0001f1ea\U0001f1f2\U0001f1f4\U0001f1f5])|(?:\U0001f1f0[\U0001f1ea\U0001f1ec-\U0001f1ee\U0001f1f2\U0001f1f3\U0001f1f5\U0001f1f7\U0001f1fc\U0001f1fe\U0001f1ff])|(?:\U0001f1f1[\U0001f1e6-\U0001f1e8\U0001f1ee\U0001f1f0\U0001f1f7-\U0001f1fb\U0001f1fe])|(?:\U0001f1f2[\U0001f1e6\U0001f1e8-\U0001f1ed\U0001f1f0-\U0001f1ff])|(?:\U0001f1f3[\U0001f1e6\U0001f1e8\U0001f1ea-\U0001f1ec\U0001f1ee\U0001f1f1\U0001f1f4\U0001f1f5\U0001f1f7\U0001f1fa\U0001f1ff])|\U0001f1f4\U0001f1f2|(?:\U0001f1f4[\U0001f1f2])|(?:\U0001f1f5[\U0001f1e6\U0001f1ea-\U0001f1ed\U0001f1f0-\U0001f1f3\U0001f1f7-\U0001f1f9\U0001f1fc\U0001f1fe])|\U0001f1f6\U0001f1e6|(?:\U0001f1f6[\U0001f1e6])|(?:\U0001f1f7[\U0001f1ea\U0001f1f4\U0001f1f8\U0001f1fa\U0001f1fc])|(?:\U0001f1f8[\U0001f1e6-\U0001f1ea\U0001f1ec-\U0001f1f4\U0001f1f7-\U0001f1f9\U0001f1fb\U0001f1fd-\U0001f1ff])|(?:\U0001f1f9[\U0001f1e6\U0001f1e8\U0001f1e9\U0001f1eb-\U0001f1ed\U0001f1ef-\U0001f1f4\U0001f1f7\U0001f1f9\U0001f1fb\U0001f1fc\U0001f1ff])|(?:\U0001f1fa[\U0001f1e6\U0001f1ec\U0001f1f2\U0001f1f8\U0001f1fe\U0001f1ff])|(?:\U0001f1fb[\U0001f1e6\U0001f1e8\U0001f1ea\U0001f1ec\U0001f1ee\U0001f1f3\U0001f1fa])|(?:\U0001f1fc[\U0001f1eb\U0001f1f8])|\U0001f1fd\U0001f1f0|(?:\U0001f1fd[\U0001f1f0])|(?:\U0001f1fe[\U0001f1ea\U0001f1f9])|(?:\U0001f1ff[\U0001f1e6\U0001f1f2\U0001f1fc])|(?:\U0001f3f3\ufe0f\u200d\U0001f308)|(?:\U0001f441\u200d\U0001f5e8)|(?:[\U0001f468\U0001f469]\u200d\u2764\ufe0f\u200d(?:\U0001f48b\u200d)?[\U0001f468\U0001f469])|(?:(?:(?:\U0001f468\u200d[\U0001f468\U0001f469])|(?:\U0001f469\u200d\U0001f469))(?:(?:\u200d\U0001f467(?:\u200d[\U0001f467\U0001f466])?)|(?:\u200d\U0001f466\u200d\U0001f466)))|(?:(?:(?:\U0001f468\u200d\U0001f468)|(?:\U0001f469\u200d\U0001f469))\u200d\U0001f466)|[\u2194-\u2199]|[\u23e9-\u23f3]|[\u23f8-\u23fa]|[\u25fb-\u25fe]|[\u2600-\u2604]|[\u2638-\u263a]|[\u2648-\u2653]|[\u2692-\u2694]|[\u26f0-\u26f5]|[\u26f7-\u26fa]|[\u2708-\u270d]|[\u2753-\u2755]|[\u2795-\u2797]|[\u2b05-\u2b07]|[\U0001f191-\U0001f19a]|[\U0001f1e6-\U0001f1ff]|[\U0001f232-\U0001f23a]|[\U0001f300-\U0001f321]|[\U0001f324-\U0001f393]|[\U0001f399-\U0001f39b]|[\U0001f39e-\U0001f3f0]|[\U0001f3f3-\U0001f3f5]|[\U0001f3f7-\U0001f3fa]|[\U0001f400-\U0001f4fd]|[\U0001f4ff-\U0001f53d]|[\U0001f549-\U0001f54e]|[\U0001f550-\U0001f567]|[\U0001f573-\U0001f57a]|[\U0001f58a-\U0001f58d]|[\U0001f5c2-\U0001f5c4]|[\U0001f5d1-\U0001f5d3]|[\U0001f5dc-\U0001f5de]|[\U0001f5fa-\U0001f64f]|[\U0001f680-\U0001f6c5]|[\U0001f6cb-\U0001f6d2]|[\U0001f6e0-\U0001f6e5]|[\U0001f6f3-\U0001f6f6]|[\U0001f910-\U0001f91e]|[\U0001f920-\U0001f927]|[\U0001f933-\U0001f93a]|[\U0001f93c-\U0001f93e]|[\U0001f940-\U0001f945]|[\U0001f947-\U0001f94b]|[\U0001f950-\U0001f95e]|[\U0001f980-\U0001f991]|\u00a9|\u00ae|\u203c|\u2049|\u2122|\u2139|\u21a9|\u21aa|\u231a|\u231b|\u2328|\u23cf|\u24c2|\u25aa|\u25ab|\u25b6|\u25c0|\u260e|\u2611|\u2614|\u2615|\u2618|\u261d|\u2620|\u2622|\u2623|\u2626|\u262a|\u262e|\u262f|\u2660|\u2663|\u2665|\u2666|\u2668|\u267b|\u267f|\u2696|\u2697|\u2699|\u269b|\u269c|\u26a0|\u26a1|\u26aa|\u26ab|\u26b0|\u26b1|\u26bd|\u26be|\u26c4|\u26c5|\u26c8|\u26ce|\u26cf|\u26d1|\u26d3|\u26d4|\u26e9|\u26ea|\u26fd|\u2702|\u2705|\u270f|\u2712|\u2714|\u2716|\u271d|\u2721|\u2728|\u2733|\u2734|\u2744|\u2747|\u274c|\u274e|\u2757|\u2763|\u2764|\u27a1|\u27b0|\u27bf|\u2934|\u2935|\u2b1b|\u2b1c|\u2b50|\u2b55|\u3030|\u303d|\u3297|\u3299|\U0001f004|\U0001f0cf|\U0001f170|\U0001f171|\U0001f17e|\U0001f17f|\U0001f18e|\U0001f201|\U0001f202|\U0001f21a|\U0001f22f|\U0001f250|\U0001f251|\U0001f396|\U0001f397|\U0001f56f|\U0001f570|\U0001f587|\U0001f590|\U0001f595|\U0001f596|\U0001f5a4|\U0001f5a5|\U0001f5a8|\U0001f5b1|\U0001f5b2|\U0001f5bc|\U0001f5e1|\U0001f5e3|\U0001f5e8|\U0001f5ef|\U0001f5f3|\U0001f6e9|\U0001f6eb|\U0001f6ec|\U0001f6f0|\U0001f930|\U0001f9c0|[#|0-9]\u20e3"
 
 
-@Arsky.command(aliases=["stopcopycatuser", "stopcopyuser", "stopcopy"])
+@IND.command(aliases=["stopcopycatuser", "stopcopyuser", "stopcopy"])
 async def stopcopycat(ctx):
     await ctx.message.delete()
-    if Arsky.user is None:
+    if IND.user is None:
         await ctx.send("You weren't copying anyone to begin with")
         return
-    await ctx.send("Stopped copying " + str(Arsky.copycat))
-    Arsky.copycat = None
+    await ctx.send("Stopped copying " + str(IND.copycat))
+    IND.copycat = None
 
 
-@Arsky.command(aliases=["copycatuser", "copyuser"])
+@IND.command(aliases=["copycatuser", "copyuser"])
 async def copycat(ctx, user: discord.User):
     await ctx.message.delete()
-    Arsky.copycat = user
-    await ctx.send("Now copying " + str(Arsky.copycat))
+    IND.copycat = user
+    await ctx.send("Now copying " + str(IND.copycat))
 
 
-@Arsky.command(aliases=["9/11", "911", "terrorist"])
+@IND.command(aliases=["9/11", "911", "terrorist"])
 async def nine_eleven(ctx):
     await ctx.message.delete()
     invis = ""  # char(173)
@@ -998,7 +998,7 @@ async def nine_eleven(ctx):
         ''')
 
 
-@Arsky.command(aliases=["jerkoff", "ejaculate", "orgasm"])
+@IND.command(aliases=["jerkoff", "ejaculate", "orgasm"])
 async def cum(ctx):
     await ctx.message.delete()
     message = await ctx.send('''
@@ -1073,13 +1073,13 @@ async def cum(ctx):
      ''')
 
 
-@Arsky.command()
+@IND.command()
 async def clear(ctx): 
     await ctx.message.delete()
     await ctx.send('ﾠﾠ' + '\n' * 400 + 'ﾠﾠ')
 
 
-@Arsky.command()
+@IND.command()
 async def sendall(ctx, *, message):
     await ctx.message.delete()
     try:
@@ -1090,18 +1090,18 @@ async def sendall(ctx, *, message):
         pass
 
 
-@Arsky.command(aliases=["spamchangegcname", "changegcname"])
+@IND.command(aliases=["spamchangegcname", "changegcname"])
 async def spamgcname(ctx):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.GroupChannel):
-        watermark = "Arsky LOL"
+        watermark = "IND LOL"
         name = ""
         for letter in watermark:
             name = name + letter
             await ctx.message.channel.edit(name=name)
 
 
-@Arsky.command(aliases=["fakename"])
+@IND.command(aliases=["fakename"])
 async def genname(ctx):
     await ctx.message.delete()
     first, second = random.choices(ctx.guild.members, k=2)
@@ -1110,7 +1110,7 @@ async def genname(ctx):
     await ctx.send(discord.utils.escape_mentions(second + first))
 
 
-@Arsky.command(aliases=['geolocate', 'iptogeo', 'iptolocation', 'ip2geo', 'ip'])
+@IND.command(aliases=['geolocate', 'iptogeo', 'iptolocation', 'ip2geo', 'ip'])
 async def geoip(ctx, *, ipaddr: str = '1.3.3.7'):
     await ctx.message.delete()
     r = requests.get(f'http://extreme-ip-lookup.com/json/{ipaddr}')
@@ -1135,7 +1135,7 @@ async def geoip(ctx, *, ipaddr: str = '1.3.3.7'):
             em.add_field(name=field['name'], value=field['value'], inline=True)
     return await ctx.send(embed=em)
 
-@Arsky.command()
+@IND.command()
 async def pingweb(ctx, website=None):
     await ctx.message.delete()
     if website is None:
@@ -1151,7 +1151,7 @@ async def pingweb(ctx, website=None):
             await ctx.send(f'Website is operational ({r})', delete_after=3)
 
 
-@Arsky.command()
+@IND.command()
 async def tweet(ctx, username: str = None, *, message: str = None):
     await ctx.message.delete()
     if username is None or message is None:
@@ -1170,7 +1170,7 @@ async def tweet(ctx, username: str = None, *, message: str = None):
                 await ctx.send(res['message'])
 
 
-@Arsky.command(aliases=["distort"])
+@IND.command(aliases=["distort"])
 async def magik(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://nekobot.xyz/api/imagegen?type=magik&intensity=3&image="
@@ -1202,14 +1202,14 @@ async def magik(ctx, user: discord.Member = None):
             await ctx.send(res['message'])
 
 
-@Arsky.command(aliases=['markasread', 'ack'])
+@IND.command(aliases=['markasread', 'ack'])
 async def read(ctx):
     await ctx.message.delete()
-    for guild in Arsky.guilds:
+    for guild in IND.guilds:
         await guild.ack()
 
 
-@Arsky.command(aliases=["deepfry"])
+@IND.command(aliases=["deepfry"])
 async def fry(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://nekobot.xyz/api/imagegen?type=deepfry&image="
@@ -1241,7 +1241,7 @@ async def fry(ctx, user: discord.Member = None):
             await ctx.send(res['message'])
 
 
-@Arsky.command()
+@IND.command()
 async def blur(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/blur?image="
@@ -1269,7 +1269,7 @@ async def blur(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["pixel"])
+@IND.command(aliases=["pixel"])
 async def pixelate(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/pixelate?image="
@@ -1297,7 +1297,7 @@ async def pixelate(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command()
+@IND.command()
 async def supreme(ctx, *, args=None):
     await ctx.message.delete()
     if args is None:
@@ -1314,7 +1314,7 @@ async def supreme(ctx, *, args=None):
         await ctx.send(endpoint)
 
 
-@Arsky.command()
+@IND.command()
 async def darksupreme(ctx, *, args=None):
     await ctx.message.delete()
     if args is None:
@@ -1331,7 +1331,7 @@ async def darksupreme(ctx, *, args=None):
         await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["facts"])
+@IND.command(aliases=["facts"])
 async def fax(ctx, *, args=None):
     await ctx.message.delete()
     if args is None:
@@ -1348,7 +1348,7 @@ async def fax(ctx, *, args=None):
         await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["blurp"])
+@IND.command(aliases=["blurp"])
 async def blurpify(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://nekobot.xyz/api/imagegen?type=blurpify&image="
@@ -1380,7 +1380,7 @@ async def blurpify(ctx, user: discord.Member = None):
             await ctx.send(res['message'])
 
 
-@Arsky.command()
+@IND.command()
 async def invert(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/invert?image="
@@ -1408,7 +1408,7 @@ async def invert(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command()
+@IND.command()
 async def gay(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/gay?image="
@@ -1436,7 +1436,7 @@ async def gay(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command()
+@IND.command()
 async def communist(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/communist?image="
@@ -1464,7 +1464,7 @@ async def communist(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command()
+@IND.command()
 async def snow(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/snow?image="
@@ -1492,7 +1492,7 @@ async def snow(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["jpeg"])
+@IND.command(aliases=["jpeg"])
 async def jpegify(ctx, user: discord.Member = None):
     await ctx.message.delete()
     endpoint = "https://api.alexflipnote.dev/filter/jpegify?image="
@@ -1520,7 +1520,7 @@ async def jpegify(ctx, user: discord.Member = None):
             await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["pornhublogo", "phlogo"])
+@IND.command(aliases=["pornhublogo", "phlogo"])
 async def pornhub(ctx, word1=None, word2=None):
     await ctx.message.delete()
     if word1 is None or word2 is None:
@@ -1538,7 +1538,7 @@ async def pornhub(ctx, word1=None, word2=None):
         await ctx.send(endpoint)
 
 
-@Arsky.command(aliases=["pornhubcomment", 'phc'])
+@IND.command(aliases=["pornhubcomment", 'phc'])
 async def phcomment(ctx, user: str = None, *, args=None):
     await ctx.message.delete()
     if user is None or args is None:
@@ -1558,7 +1558,7 @@ async def phcomment(ctx, user: str = None, *, args=None):
         await ctx.send(res["message"])
 
 
-@Arsky.command()
+@IND.command()
 async def token(ctx, user: discord.Member = None):
     await ctx.message.delete()
     list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
@@ -1574,7 +1574,7 @@ async def token(ctx, user: discord.Member = None):
         await ctx.send(user.mention + "'s token is " + "".join(token))
 
 
-@Arsky.command()
+@IND.command()
 async def hack(ctx, user: discord.Member = None):
     await ctx.message.delete()
     gender = ["Male", "Female", "Trans", "Other", "Retard"]
@@ -1667,7 +1667,7 @@ async def hack(ctx, user: discord.Member = None):
             content=f"```Successfully hacked {user}\nName: {random.choice(name)}\nGender: {random.choice(gender)}\nAge: {age}\nHeight: {random.choice(height)}\nWeight: {weight}\nHair Color: {random.choice(hair_color)}\nSkin Color: {random.choice(skin_color)}\nDOB: {dob}\nLocation: {random.choice(location)}\nPhone: {phone}\nE-Mail: {user.name + random.choice(email)}\nPasswords: {random.choices(password, k=3)}\nOccupation: {random.choice(occupation)}\nAnnual Salary: {random.choice(salary)}\nEthnicity: {random.choice(ethnicity)}\nReligion: {random.choice(religion)}\nSexuality: {random.choice(sexuality)}\nEducation: {random.choice(education)}```")
 
 
-@Arsky.command(aliases=["reversesearch", "anticatfish", "catfish"])
+@IND.command(aliases=["reversesearch", "anticatfish", "catfish"])
 async def revav(ctx, user: discord.Member = None):
     await ctx.message.delete()
     if user is None:
@@ -1679,7 +1679,7 @@ async def revav(ctx, user: discord.Member = None):
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
 
 
-@Arsky.command(aliases=['pfp', 'avatar'])
+@IND.command(aliases=['pfp', 'avatar'])
 async def av(ctx, *, user: discord.Member = None):
     await ctx.message.delete()
     format = "gif"
@@ -1694,7 +1694,7 @@ async def av(ctx, *, user: discord.Member = None):
         await ctx.send(file=discord.File(file, f"Avatar.{format}"))
 
 
-@Arsky.command()
+@IND.command()
 async def whois(ctx, *, user: discord.Member = None):
     await ctx.message.delete()
     if user is None:
@@ -1725,13 +1725,13 @@ async def whois(ctx, *, user: discord.Member = None):
         return await ctx.send(embed=em)
 
 
-@Arsky.command(aliases=["del", "quickdel"])
+@IND.command(aliases=["del", "quickdel"])
 async def quickdelete(ctx, *, args):
     await ctx.message.delete()
     await ctx.send(args, delete_after=1)
 
 
-@Arsky.command()
+@IND.command()
 async def minesweeper(ctx, size: int = 5):
     await ctx.message.delete()
     size = max(min(size, 8), 2)
@@ -1756,7 +1756,7 @@ async def minesweeper(ctx, size: int = 5):
     await ctx.send(message)
 
 
-@Arsky.command(name='1337speak', aliases=['leetspeak'])
+@IND.command(name='1337speak', aliases=['leetspeak'])
 async def _1337_speak(ctx, *, text):
     await ctx.message.delete()
     text = text.replace('a', '4').replace('A', '4').replace('e', '3') \
@@ -1765,7 +1765,7 @@ async def _1337_speak(ctx, *, text):
     await ctx.send(f'{text}')
 
 
-@Arsky.command()
+@IND.command()
 async def ghost(ctx):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
@@ -1774,12 +1774,12 @@ async def ghost(ctx):
         password = config.get('password')
         with open('Images/Avatars/Transparent.png', 'rb') as f:
             try:
-                await Exeter.user.edit(password=password, username="ٴٴٴٴ", avatar=f.read())
+                await IND.user.edit(password=password, username="ٴٴٴٴ", avatar=f.read())
             except discord.HTTPException as e:
                 print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
 
 
-@Arsky.command(aliases=['pfpget', 'stealpfp'])
+@IND.command(aliases=['pfpget', 'stealpfp'])
 async def pfpsteal(ctx, user: discord.Member):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
@@ -1795,12 +1795,12 @@ async def pfpsteal(ctx, user: discord.Member):
         try:
             Image.open('Images/Avatars/Stolen/Stolen.png').convert('RGB')
             with open('Images/Avatars/Stolen/Stolen.png', 'rb') as f:
-                await Exeter.user.edit(password=password, avatar=f.read())
+                await IND.user.edit(password=password, avatar=f.read())
         except discord.HTTPException as e:
             print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
 
 
-@Arsky.command(name='set-pfp', aliases=['setpfp', 'pfpset,"changepfp'])
+@IND.command(name='set-pfp', aliases=['setpfp', 'pfpset,"changepfp'])
 async def _set_pfp(ctx, *, url):
     await ctx.message.delete()
     if config.get('password') == 'password-here':
@@ -1816,12 +1816,12 @@ async def _set_pfp(ctx, *, url):
     try:
         Image.open('Images/Avatars/PFP-1.png').convert('RGB')
         with open('Images/Avatars/PFP-1.png', 'rb') as f:
-            await Arsky.user.edit(password=password, avatar=f.read())
+            await IND.user.edit(password=password, avatar=f.read())
     except discord.HTTPException as e:
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
 
 
-@Arsky.command(aliases=['wouldyourather', 'would-you-rather', 'wyrq'])
+@IND.command(aliases=['wouldyourather', 'would-you-rather', 'wyrq'])
 async def wyr(ctx):  # b'\xfc'
     await ctx.message.delete()
     r = requests.get('https://www.conversationstarters.com/wyrqlist.php').text
@@ -1833,7 +1833,7 @@ async def wyr(ctx):  # b'\xfc'
     await message.add_reaction("🅱")
 
 
-@Arsky.command()
+@IND.command()
 async def topic(ctx):  # b'\xfc'
     await ctx.message.delete()
     r = requests.get('https://www.conversationstarters.com/generator.php').content
@@ -1842,7 +1842,7 @@ async def topic(ctx):  # b'\xfc'
     await ctx.send(topic)
 
 
-@Arsky.command(aliases=['dong', 'penis'])
+@IND.command(aliases=['dong', 'penis'])
 async def dick(ctx, *, user: discord.Member = None):
     await ctx.message.delete()
     if user is None:
@@ -1854,7 +1854,7 @@ async def dick(ctx, *, user: discord.Member = None):
     await ctx.send(f"{user}'s Dick size\n8{dong}D")
 
 
-@Arsky.command(aliases=['changehypesquad'])
+@IND.command(aliases=['changehypesquad'])
 async def hypesquad(ctx, house):
     await ctx.message.delete()
     request = requests.Session()
@@ -1878,7 +1878,7 @@ async def hypesquad(ctx, house):
         print(f"{Fore.RED}[ERROR]: {Fore.YELLOW}{e}" + Fore.RESET)
 
 
-@Arsky.command(aliases=['tokenfucker', 'disable', 'crash'])
+@IND.command(aliases=['tokenfucker', 'disable', 'crash'])
 async def tokenfuck(ctx, _token):
     await ctx.message.delete()
     headers = {
@@ -1905,7 +1905,7 @@ async def tokenfuck(ctx, _token):
     guild = {
         'channels': None,
         'icon': None,
-        'name': "Exeter",
+        'name': "IND",
         'region': "europe"
     }
     for _i in range(50):
@@ -1935,7 +1935,7 @@ async def tokenfuck(ctx, _token):
                 break
 
 
-@Arsky.command(aliases=['fakeconnection', 'spoofconnection', 'spoofcon', "fakecon"])
+@IND.command(aliases=['fakeconnection', 'spoofconnection', 'spoofcon', "fakecon"])
 async def fakenet(ctx, _type=None, *, name=None):
     await ctx.message.delete()
     if _type is None or name is None:
@@ -1967,10 +1967,10 @@ async def fakenet(ctx, _type=None, *, name=None):
         await ctx.send(f"Invalid connection_type: `{type}` with Username: `{name}` and ID: `{ID}`", delete_after=3)
     else:
         await ctx.send(
-            '**[ERROR]** `Exeter Fake-Connection doesn\'t work anymore because Discord patched connection-spoofing`')
+            '**[ERROR]** `IND Fake-Connection doesn\'t work anymore because Discord patched connection-spoofing`')
 
 
-@Arsky.command(aliases=['tokinfo', 'tdox'])
+@IND.command(aliases=['tokinfo', 'tdox'])
 async def tokeninfo(ctx, _token):
     await ctx.message.delete()
     headers = {
@@ -2037,12 +2037,12 @@ async def tokeninfo(ctx, _token):
     return await ctx.send(embed=em)
 
 
-@Arsky.command(aliases=["copyguild", "copyserver"])
+@IND.command(aliases=["copyguild", "copyserver"])
 async def copy(ctx):  # b'\xfc'
     await ctx.message.delete()
-    await Arsky.create_guild(f'backup-{ctx.guild.name}')
+    await IND.create_guild(f'backup-{ctx.guild.name}')
     await asyncio.sleep(4)
-    for g in Arsky.guilds:
+    for g in IND.guilds:
         if f'backup-{ctx.guild.name}' in g.name:
             for c in g.channels:
                 await c.delete()
@@ -2059,7 +2059,7 @@ async def copy(ctx):  # b'\xfc'
         pass
 
 
-@Arsky.command()
+@IND.command()
 async def poll(ctx, *, arguments):
     await ctx.message.delete()
     message = discord.utils.escape_markdown(arguments[str.find(arguments, "msg:"):str.find(arguments, "1:")]).replace(
@@ -2072,7 +2072,7 @@ async def poll(ctx, *, arguments):
     await message.add_reaction('🅱')
 
 
-@Arsky.command()
+@IND.command()
 async def massmention(ctx, *, message=None):
     await ctx.message.delete()
     if len(list(ctx.guild.members)) >= 50:
@@ -2102,7 +2102,7 @@ async def massmention(ctx, *, message=None):
             await ctx.send(post_message)
 
 
-@Arsky.command(aliases=["rekt", "nuke"])
+@IND.command(aliases=["rekt", "nuke"])
 async def destroy(ctx):
     await ctx.message.delete()
     for user in list(ctx.guild.members):
@@ -2123,31 +2123,31 @@ async def destroy(ctx):
     try:
         await ctx.guild.edit(
             name=RandString(),
-            description="Arsky LOL",
-            reason="Arsky LOL",
+            description="IND LOL",
+            reason="IND LOL",
             icon=None,
             banner=None
         )
     except:
         pass
     for _i in range(250):
-        await ctx.guild.create_text_channel(name="Arsky")
+        await ctx.guild.create_text_channel(name="IND")
     for _i in range(250):
-        await ctx.guild.create_role(name="Arsky", color=RandomColor())
+        await ctx.guild.create_role(name="IND", color=RandomColor())
 
 
-@Arsky.command(aliases=["banwave", "banall", "etb"])
+@IND.command(aliases=["banwave", "banall", "etb"])
 async def massban(ctx):
     await ctx.message.delete()
     users = list(ctx.guild.members)
     for user in users:
         try:
-            await user.ban(reason="kilex")
+            await user.ban(reason="IND RAID")
         except:
             pass
 
 
-@Arsky.command()
+@IND.command()
 async def dynoban(ctx):
     await ctx.message.delete()
     for member in list(ctx.guild.members):
@@ -2156,38 +2156,38 @@ async def dynoban(ctx):
         await asyncio.sleep(1.5)
 
 
-@Arsky.command(aliases=["kickall", "kickwave"])
+@IND.command(aliases=["kickall", "kickwave"])
 async def masskick(ctx):
     await ctx.message.delete()
     users = list(ctx.guild.members)
     for user in users:
         try:
-            await user.kick(reason="kilex")
+            await user.kick(reason="IND RAID")
         except:
             pass
 
 
-@Arsky.command(aliases=["spamroles"])
+@IND.command(aliases=["spamroles"])
 async def massrole(ctx):
     await ctx.message.delete()
     for _i in range(250):
         try:
-            await ctx.guild.create_role(name="Kilex is Hot", color=RandomColor())
+            await ctx.guild.create_role(name="IND OP", color=RandomColor())
         except:
             return
 
 
-@Arsky.command(aliases=["masschannels", "masschannel", "ctc"])
+@IND.command(aliases=["masschannels", "masschannel", "ctc"])
 async def spamchannels(ctx):
     await ctx.message.delete()
     for _i in range(250):
         try:
-            await ctx.guild.create_text_channel(name="Kilex is so cute and sexy mmmmmm")
+            await ctx.guild.create_text_channel(name="IND SELFBOT")
         except:
             return
 
 
-@Arsky.command(aliases=["delchannel"])
+@IND.command(aliases=["delchannel"])
 async def delchannels(ctx):
     await ctx.message.delete()
     for channel in list(ctx.guild.channels):
@@ -2197,7 +2197,7 @@ async def delchannels(ctx):
             return
 
 
-@Arsky.command(aliases=["deleteroles"])
+@IND.command(aliases=["deleteroles"])
 async def delroles(ctx):
     await ctx.message.delete()
     for role in list(ctx.guild.roles):
@@ -2207,7 +2207,7 @@ async def delroles(ctx):
             pass
 
 
-@Arsky.command(aliases=["purgebans", "unbanall"])
+@IND.command(aliases=["purgebans", "unbanall"])
 async def massunban(ctx):
     await ctx.message.delete()
     banlist = await ctx.guild.bans()
@@ -2219,18 +2219,18 @@ async def massunban(ctx):
             pass
 
 
-@Arsky.command()
+@IND.command()
 async def spam(ctx, amount: int, *, message):
     await ctx.message.delete()
     for _i in range(amount):
         await ctx.send(message)
 
 
-@Arsky.command()
+@IND.command()
 async def dm(ctx, user: discord.Member, *, message):
     await ctx.message.delete()
-    user = Exeter.get_user(user.id)
-    if ctx.author.id == Exeter.user.id:
+    user = IND.get_user(user.id)
+    if ctx.author.id == IND.user.id:
         return
     else:
         try:
@@ -2239,7 +2239,7 @@ async def dm(ctx, user: discord.Member, *, message):
             pass
 
 
-@Arsky.command(name='get-color', aliases=['color', 'colour', 'sc', "hexcolor", "rgb"])
+@IND.command(name='get-color', aliases=['color', 'colour', 'sc', "hexcolor", "rgb"])
 async def _get_color(ctx, *, color: discord.Colour):
     await ctx.message.delete()
     file = io.BytesIO()
@@ -2250,7 +2250,7 @@ async def _get_color(ctx, *, color: discord.Colour):
     await ctx.send(file=discord.File(file, 'color.png'), embed=em)
 
 
-@Arsky.command(aliases=['rainbowrole'])
+@IND.command(aliases=['rainbowrole'])
 async def rainbow(ctx, *, role):
     await ctx.message.delete()
     role = discord.utils.get(ctx.guild.roles, name=role)
@@ -2262,7 +2262,7 @@ async def rainbow(ctx, *, role):
             break
 
 
-@Arsky.command()
+@IND.command()
 async def ping(ctx):
     await ctx.message.delete()
     before = time.monotonic()
@@ -2271,7 +2271,7 @@ async def ping(ctx):
     await message.edit(content=f"`{int(ping)} ms`")
 
 
-@Arsky.command(aliases=["guildinfo"])
+@IND.command(aliases=["guildinfo"])
 async def serverinfo(ctx):
     await ctx.message.delete()
     date_format = "%a, %d %b %Y %I:%M %p"
@@ -2286,7 +2286,7 @@ async def serverinfo(ctx):
     await ctx.send(embed=embed)
 
 
-@Arsky.command()
+@IND.command()
 async def wizz(ctx):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.TextChannel):
@@ -2353,7 +2353,7 @@ async def wizz(ctx):
             content=f"`Wizzing {ctx.message.channel.name}, will take {initial} seconds to complete`\n`Saving {random.randrange(0, 1000)} Messages...\nCaching {random.randrange(0, 1000)} Messages...\nDeleting {random.randrange(0, 1000)} Pinned Messages...\nKicking {len(ctx.message.channel.recipients)} Users...`")
 
 
-@Arsky.command(name='8ball')
+@IND.command(name='8ball')
 async def _ball(ctx, *, question):
     await ctx.message.delete()
     responses = [
@@ -2373,7 +2373,7 @@ async def _ball(ctx, *, question):
     await ctx.send(embed=embed)
 
 
-@Arsky.command(aliases=['slots', 'bet', "slotmachine"])
+@IND.command(aliases=['slots', 'bet', "slotmachine"])
 async def slot(ctx):
     await ctx.message.delete()
     emojis = "🍎🍊🍐🍋🍉🍇🍓🍒"
@@ -2392,14 +2392,14 @@ async def slot(ctx):
             {"title": "Slot machine", "description": f"{slotmachine} No match, you lost"}))
 
 
-@Arsky.command()
+@IND.command()
 async def tts(ctx, *, message):
     await ctx.message.delete()
     buff = await do_tts(message)
     await ctx.send(file=discord.File(buff, f"{message}.wav"))
 
 
-@Arsky.command(aliases=['guildpfp', 'serverpfp', 'servericon'])
+@IND.command(aliases=['guildpfp', 'serverpfp', 'servericon'])
 async def guildicon(ctx):
     await ctx.message.delete()
     em = discord.Embed(title=ctx.guild.name)
@@ -2407,7 +2407,7 @@ async def guildicon(ctx):
     await ctx.send(embed=em)
 
 
-@Arsky.command(aliases=['serverbanner'])
+@IND.command(aliases=['serverbanner'])
 async def banner(ctx):
     await ctx.message.delete()
     em = discord.Embed(title=ctx.guild.name)
@@ -2415,7 +2415,7 @@ async def banner(ctx):
     await ctx.send(embed=em)
 
 
-@Arsky.command(name='first-message', aliases=['firstmsg', 'fm', 'firstmessage'])
+@IND.command(name='first-message', aliases=['firstmsg', 'fm', 'firstmessage'])
 async def _first_message(ctx, channel: discord.TextChannel = None):
     await ctx.message.delete()
     if channel is None:
@@ -2426,20 +2426,20 @@ async def _first_message(ctx, channel: discord.TextChannel = None):
     await ctx.send(embed=embed)
 
 
-@Arsky.command(aliases=["rc"])
+@IND.command(aliases=["rc"])
 async def renamechannels(ctx, *, name):
     await ctx.message.delete()
     for channel in ctx.guild.channels:
         await channel.edit(name=name)
 
 
-@Arsky.command(aliases=["renameserver", "nameserver"])
+@IND.command(aliases=["renameserver", "nameserver"])
 async def servername(ctx, *, name):
     await ctx.message.delete()
     await ctx.guild.edit(name=name)
 
 
-@Arsky.command()
+@IND.command()
 async def nickall(ctx, nickname):
     await ctx.message.delete()
     for user in list(ctx.guild.members):
@@ -2449,7 +2449,7 @@ async def nickall(ctx, nickname):
             pass
 
 
-@Arsky.command()
+@IND.command()
 async def youtube(ctx, *, search):
     await ctx.message.delete()
     query_string = parse.urlencode({'search_query': search})
@@ -2458,13 +2458,13 @@ async def youtube(ctx, *, search):
     await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
 
 
-@Arsky.command()
+@IND.command()
 async def prefix(ctx, prefix):
     await ctx.message.delete()
-    Arsky.command_prefix = str(prefix)
+    IND.command_prefix = str(prefix)
 
 
-@Arsky.command()
+@IND.command()
 async def abc(ctx):
     await ctx.message.delete()
     ABC = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -2476,7 +2476,7 @@ async def abc(ctx):
         await asyncio.sleep(2)
 
 
-@Arsky.command(aliases=["100"])
+@IND.command(aliases=["100"])
 async def _100(ctx):
     await ctx.message.delete()
     message = ctx.send("Starting count to 100")
@@ -2486,7 +2486,7 @@ async def _100(ctx):
         await asyncio.sleep(2)
 
 
-@Arsky.command(aliases=['bitcoin'])
+@IND.command(aliases=['bitcoin'])
 async def btc(ctx):
     await ctx.message.delete()
     r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR')
@@ -2498,14 +2498,14 @@ async def btc(ctx):
     await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def hastebin(ctx, *, message):
     await ctx.message.delete()
     r = requests.post("https://hastebin.com/documents", data=message).json()
     await ctx.send(f"<https://hastebin.com/{r['key']}>")
 
 
-@Arsky.command(aliases=["fancy"])
+@IND.command(aliases=["fancy"])
 async def ascii(ctx, *, text):
     await ctx.message.delete()
     r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
@@ -2514,7 +2514,7 @@ async def ascii(ctx, *, text):
     await ctx.send(f"```{r}```")
 
 
-@Arsky.command(pass_context=True, aliases=["cyclename", "autoname", "autonick", "cycle"])
+@IND.command(pass_context=True, aliases=["cyclename", "autoname", "autonick", "cycle"])
 async def cyclenick(ctx, *, text):
     await ctx.message.delete()
     global cycling
@@ -2526,56 +2526,55 @@ async def cyclenick(ctx, *, text):
             await ctx.message.author.edit(nick=name)
 
 
-@Arsky.command(aliases=["stopcyclename", "cyclestop", "stopautoname", "stopautonick", "stopcycle"])
+@IND.command(aliases=["stopcyclename", "cyclestop", "stopautoname", "stopautonick", "stopcycle"])
 async def stopcyclenick(ctx):
     await ctx.message.delete()
     global cycling
     cycling = False
 
 
-@Arsky.command()
+@IND.command()
 async def acceptfriends(ctx):
     await ctx.message.delete()
-    for relationship in Exeter.user.relationships:
+    for relationship in IND.user.relationships:
         if relationship == discord.RelationshipType.incoming_request:
             await relationship.accept()
 
 
-@Arsky.command()
+@IND.command()
 async def ignorefriends(ctx):
     await ctx.message.delete()
-    for relationship in Exeter.user.relationships:
+    for relationship in IND.user.relationships:
         if relationship is discord.RelationshipType.incoming_request:
             relationship.delete()
 
 
-@Arsky.command()
+@IND.command()
 async def delfriends(ctx):
     await ctx.message.delete()
-    for relationship in Exeter.user.relationships:
+    for relationship in IND.user.relationships:
         if relationship is discord.RelationshipType.friend:
             await relationship.delete()
 
 
-
-@Arsky.command()
+@IND.command()
 async def clearblocked(ctx):
     await ctx.message.delete()
-    print(Arsky.user.relationships)
-    for relationship in Arsky.user.relationships:
+    print(IND.user.relationships)
+    for relationship in IND.user.relationships:
         if relationship is discord.RelationshipType.blocked:
             print(relationship)
             await relationship.delete()
 
 
-@Arsky.command(aliases=["changeregions", "changeregion", "regionschange"])
+@IND.command(aliases=["changeregions", "changeregion", "regionschange"])
 async def regionchange(ctx, amount):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.GroupChannel):
         print()
 
 
-@Arsky.command()
+@IND.command()
 async def kickgc(ctx):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.GroupChannel):
@@ -2583,14 +2582,14 @@ async def kickgc(ctx):
             await ctx.message.channel.remove_recipients(recipient)
 
 
-@Arsky.command(aliases=["gcleave"])
+@IND.command(aliases=["gcleave"])
 async def leavegc(ctx):
     await ctx.message.delete()
     if isinstance(ctx.message.channel, discord.GroupChannel):
         await ctx.message.channel.leave()
 
 
-@Arsky.command()
+@IND.command()
 async def massreact(ctx, emote):
     await ctx.message.delete()
     messages = await ctx.message.channel.history(limit=20).flatten()
@@ -2598,7 +2597,7 @@ async def massreact(ctx, emote):
         await message.add_reaction(emote)
 
 
-@Arsky.command()
+@IND.command()
 async def dog(ctx):
     await ctx.message.delete()
     r = requests.get("https://dog.ceo/api/breeds/image/random").json()
@@ -2613,7 +2612,7 @@ async def dog(ctx):
         await ctx.send(link)
 
 
-@Arsky.command()
+@IND.command()
 async def cat(ctx):
     await ctx.message.delete()
     r = requests.get("https://api.thecatapi.com/v1/images/search").json()
@@ -2628,7 +2627,7 @@ async def cat(ctx):
         await ctx.send(link)
 
 
-@Arsky.command()
+@IND.command()
 async def sadcat(ctx):
     await ctx.message.delete()
     r = requests.get("https://api.alexflipnote.dev/sadcat").json()
@@ -2643,7 +2642,7 @@ async def sadcat(ctx):
         await ctx.send(link)
 
 
-@Arsky.command()
+@IND.command()
 async def bird(ctx):
     await ctx.message.delete()
     r = requests.get("https://api.alexflipnote.dev/birb").json()
@@ -2658,7 +2657,7 @@ async def bird(ctx):
         await ctx.send(link)
 
 
-@Arsky.command()
+@IND.command()
 async def fox(ctx):
     await ctx.message.delete()
     r = requests.get('https://randomfox.ca/floof/').json()
@@ -2673,7 +2672,7 @@ async def fox(ctx):
         await ctx.send(link)
 
 
-@Arsky.command()
+@IND.command()
 async def anal(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/anal")
@@ -2690,7 +2689,7 @@ async def anal(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def erofeet(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/erofeet")
@@ -2707,7 +2706,7 @@ async def erofeet(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def feet(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/feetg")
@@ -2724,7 +2723,7 @@ async def feet(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def hentai(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
@@ -2741,7 +2740,7 @@ async def hentai(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def boobs(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/boobs")
@@ -2758,7 +2757,7 @@ async def boobs(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def tits(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/tits")
@@ -2775,7 +2774,7 @@ async def tits(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def blowjob(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/blowjob")
@@ -2792,7 +2791,7 @@ async def blowjob(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command(aliases=["neko"])
+@IND.command(aliases=["neko"])
 async def lewdneko(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
@@ -2809,7 +2808,7 @@ async def lewdneko(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def lesbian(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/les")
@@ -2826,7 +2825,7 @@ async def lesbian(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def cumslut(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/cum")
@@ -2843,7 +2842,7 @@ async def cumslut(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command(aliases=["vagina"])
+@IND.command(aliases=["vagina"])
 async def pussy(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/pussy")
@@ -2860,7 +2859,7 @@ async def pussy(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def waifu(ctx):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/waifu")
@@ -2877,7 +2876,7 @@ async def waifu(ctx):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def feed(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/feed")
@@ -2894,7 +2893,7 @@ async def feed(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def tickle(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/tickle")
@@ -2911,7 +2910,7 @@ async def tickle(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def slap(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/slap")
@@ -2928,7 +2927,7 @@ async def slap(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def hug(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/hug")
@@ -2945,7 +2944,7 @@ async def hug(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def cuddle(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/cuddle")
@@ -2962,7 +2961,7 @@ async def cuddle(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def smug(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/smug")
@@ -2979,7 +2978,7 @@ async def smug(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def pat(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/pat")
@@ -2996,7 +2995,7 @@ async def pat(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def kiss(ctx, user: discord.Member):
     await ctx.message.delete()
     r = requests.get("https://nekos.life/api/v2/img/kiss")
@@ -3013,7 +3012,7 @@ async def kiss(ctx, user: discord.Member):
         await ctx.send(embed=em)
 
 
-@Arsky.command()
+@IND.command()
 async def uptime(ctx):
     await ctx.message.delete()
     now = datetime.datetime.utcnow()  # Timestamp of when uptime function is run
@@ -3029,10 +3028,10 @@ async def uptime(ctx):
     await ctx.send(uptime_stamp)
 
 
-@Arsky.command()
+@IND.command()
 async def purge(ctx, amount: int):
     await ctx.message.delete()
-    async for message in ctx.message.channel.history(limit=amount).filter(lambda m: m.author == Arsky.user).map(
+    async for message in ctx.message.channel.history(limit=amount).filter(lambda m: m.author == IND.user).map(
             lambda m: m):
         try:
             await message.delete()
@@ -3040,162 +3039,162 @@ async def purge(ctx, amount: int):
             pass
 
 
-@Arsky.command(name='group-leaver',
+@IND.command(name='group-leaver',
                 aliase=['leaveallgroups', 'leavegroup', 'leavegroups', "groupleave", "groupleaver"])
 async def _group_leaver(ctx):
     await ctx.message.delete()
-    for channel in Arsky.private_channels:
+    for channel in IND.private_channels:
         if isinstance(channel, discord.GroupChannel):
             await channel.leave()
 
 
-@Arsky.command(aliases=["streaming"])
+@IND.command(aliases=["streaming"])
 async def stream(ctx, *, message):
     await ctx.message.delete()
     stream = discord.Streaming(
         name=message,
         url=stream_url,
     )
-    await Arsky.change_presence(activity=stream)
+    await IND.change_presence(activity=stream)
 
 
-@Arsky.command(alises=["game"])
+@IND.command(alises=["game"])
 async def playing(ctx, *, message):
     await ctx.message.delete()
     game = discord.Game(
         name=message
     )
-    await Arsky.change_presence(activity=game)
+    await IND.change_presence(activity=game)
 
 
-@Arsky.command(aliases=["listen"])
+@IND.command(aliases=["listen"])
 async def listening(ctx, *, message):
     await ctx.message.delete()
-    await Arsky.change_presence(
+    await IND.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.listening,
             name=message,
         ))
 
 
-@Arsky.command(aliases=["watch"])
+@IND.command(aliases=["watch"])
 async def watching(ctx, *, message):
     await ctx.message.delete()
-    await Arsky.change_presence(
+    await IND.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.watching,
             name=message
         ))
 
 
-@Arsky.command(aliases=["stopstreaming", "stopstatus", "stoplistening", "stopplaying", "stopwatching"])
+@IND.command(aliases=["stopstreaming", "stopstatus", "stoplistening", "stopplaying", "stopwatching"])
 async def stopactivity(ctx):
     await ctx.message.delete()
-    await Arsky.change_presence(activity=None, status=discord.Status.dnd)
+    await IND.change_presence(activity=None, status=discord.Status.dnd)
 
 
-@Arsky.command()
+@IND.command()
 async def reverse(ctx, *, message):
     await ctx.message.delete()
     message = message[::-1]
     await ctx.send(message)
 
 
-@Arsky.command()
+@IND.command()
 async def shrug(ctx):
     await ctx.message.delete()
     shrug = r'¯\_(ツ)_/¯'
     await ctx.send(shrug)
 
 
-@Arsky.command()
+@IND.command()
 async def lenny(ctx):
     await ctx.message.delete()
     lenny = '( ͡° ͜ʖ ͡°)'
     await ctx.send(lenny)
 
 
-@Arsky.command(aliases=["fliptable"])
+@IND.command(aliases=["fliptable"])
 async def tableflip(ctx):
     await ctx.message.delete()
     tableflip = '(╯°□°）╯︵ ┻━┻'
     await ctx.send(tableflip)
 
 
-@Arsky.command()
+@IND.command()
 async def unflip(ctx):
     await ctx.message.delete()
     unflip = '┬─┬ ノ( ゜-゜ノ)'
     await ctx.send(unflip)
 
 
-@Arsky.command()
+@IND.command()
 async def bold(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('**' + message + '**')
 
 
-@Arsky.command()
+@IND.command()
 async def censor(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('||' + message + '||')
 
 
-@Arsky.command()
+@IND.command()
 async def underline(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('__' + message + '__')
 
 
-@Arsky.command()
+@IND.command()
 async def italicize(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('*' + message + '*')
 
 
-@Arsky.command()
+@IND.command()
 async def strike(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('~~' + message + '~~')
 
 
-@Arsky.command()
+@IND.command()
 async def quote(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('> ' + message)
 
 
-@Arsky.command()
+@IND.command()
 async def code(ctx, *, message):
     await ctx.message.delete()
     await ctx.send('`' + message + "`")
 
 
-@Arsky.command(name='rolecolor')
+@IND.command(name='rolecolor')
 async def _role_hexcode(ctx, *, role: discord.Role):
     await ctx.message.delete()
     await ctx.send(f"{role.name} : {role.color}")
 
 
-@Arsky.command()
+@IND.command()
 async def empty(ctx):
     await ctx.message.delete()
     await ctx.send(chr(173))
 
 
-@Arsky.command()
+@IND.command()
 async def everyone(ctx):
     await ctx.message.delete()
     await ctx.send('https://@everyone@google.com')
 
 
-@Arsky.command(aliases=["logout"])
+@IND.command(aliases=["logout"])
 async def shutdown(ctx):
     await ctx.message.delete()
-    await Arsky.logout()
+    await IND.logout()
 
 
-@Arsky.command(aliases=["nitrogen"])
+@IND.command(aliases=["nitrogen"])
 async def nitro(ctx):
     await ctx.message.delete()
     await ctx.send(Nitro())
