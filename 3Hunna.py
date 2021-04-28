@@ -820,7 +820,7 @@ async def help(ctx, category=None):
                          icon_url=Arsky.user.avatar_url)
         embed.set_thumbnail(url=Arsky.user.avatar_url)
         embed.set_image(url="https://media.discordapp.net/attachments/789202406000033872/790317974863085578/image0.gif?width=320&height=180")
-        embed.add_field(name="\uD83E\uDDCA `common`", value="Shows all common commands", inline=False)
+        embed.add_field(name="\uD83E\uDDCA `COMMON`", value="Shows all common commands", inline=False)
         embed.add_field(name="\uD83E\uDDCA `ACCOUNT`", value="Shows all account commands", inline=False)
         embed.add_field(name="\uD83E\uDDCA `TEXT`", value="Shows all text commands", inline=False)
         embed.add_field(name="\uD83E\uDDCA `RAP`", value="Shows all music commands", inline=False)
@@ -900,12 +900,12 @@ async def help(ctx, category=None):
 async def exeter(ctx):
     await ctx.message.delete()
     await ctx.send("""
-░█████╗░██████╗░░██████╗██╗░░██╗██╗░░░██╗
-██╔══██╗██╔══██╗██╔════╝██║░██╔╝╚██╗░██╔╝
-███████║██████╔╝╚█████╗░█████═╝░░╚████╔╝░
-██╔══██║██╔══██╗░╚═══██╗██╔═██╗░░░╚██╔╝░░
-██║░░██║██║░░██║██████╔╝██║░╚██╗░░░██║░░░
-╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░
+ ████████   ██       ██║ ████╗     
+ ╚══██═══╝  ██ ██    ██║ ██  ██╗  
+    ██║     ██║╚═██  ██║ ██   ██║  
+    ██║     ██║  ╚═████║ ██  ██╔╝ 
+ ████████╗  ██║    ╚═██║ ████╔╝   
+ ╚═══════╝  ╚═╝      ╚═╝ ╚═══╝    
 """)
 
 
