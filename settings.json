@@ -1,0 +1,26 @@
+{
+    "prefix": "x",
+    "token": "mfa.U5juoa9iSOlZ9I0ITOOVaEshAa7HWKSWzkgXQb9LRLcd8TfbROuAI2gTEjJO6W3Gzel4rKsscPOodiww3g9w",
+    "password": "freedomde",
+	
+    "app_theme": "Blue",
+    "notifications": true,
+    "embed_color": "00ffd5",
+    "delete_after": false,
+    "safe_mode": false,
+    "afk": "",
+	
+    "twitch_url": "URL-HERE",
+    "btc_address": "BTC-ADDRESS-HERE",
+    "cashapp_tag": "CASHAPP-TAG-HERE",
+    "paypal_email": "PAYPAL-EMAIL-HERE",
+	
+    "nitro_sniper": true,
+    "giveaway_sniper": true,
+    "privnote_sniper": true,
+	
+    "email": {
+        "email_address": "GMAIL-ADDRESS-HERE",
+        "email_password": "PASSWORD-HERE"
+    }
+}
