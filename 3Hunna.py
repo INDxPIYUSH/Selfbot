@@ -129,14 +129,11 @@ def startprint():
         nitro = "Disabled"
 
     print(f'''{Fore.CYAN}
-█ █████╗ ██████╗ ███████╗██╗  ██╗██╗   ██╗    ███████╗███████╗██╗     ███████╗██████╗  ██████╗ ████████╗
-██╔══██╗██╔══██╗██╔════╝██║ ██╔╝╚██╗ ██╔╝    ██╔════╝██╔════╝██║     ██╔════╝██╔══██╗██╔═══██╗╚══██╔══╝
-███████║██████╔╝███████╗█████╔╝  ╚████╔╝     ███████╗█████╗  ██║     █████╗  ██████╔╝██║   ██║   ██║   
-██╔══██║██╔══██╗╚════██║██╔═██╗   ╚██╔╝      ╚════██║██╔══╝  ██║     ██╔══╝  ██╔══██╗██║   ██║   ██║   
-██║  ██║██║  ██║███████║██║  ██╗   ██║       ███████║███████╗███████╗██║     ██████╔╝╚██████╔╝   ██║   
-╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝       ╚══════╝╚══════╝╚══════╝╚═╝     ╚═════╝  ╚═════╝    ╚═╝   
-                                                                                                       
-                                                 
+████████ ██       ██ ████
+   ██    ██ ██    ██ ██  ██                                                                                       
+   ██    ██   ██  ██ ██   ██
+   ██    ██     ████ ██  ██
+████████ ██       ██ ████
                        {Fore.CYAN}Arsky v{SELFBOT.__version__} | {Fore.CYAN}Logged in as: {Arsky.user.name}#{Arsky.user.discriminator} {Fore.CYAN}| ID: {Fore.CYAN}{Arsky.user.id}   
                        {Fore.CYAN}Nitro Sniper | {Fore.CYAN}{nitro}
                        {Fore.CYAN}Cached Users: {Fore.CYAN}{len(Arsky.users)}
@@ -217,27 +214,27 @@ def RandString():
 
 
 colorama.init()
-Arsky = discord.Client()
-Arsky = commands.Bot(description='xD', command_prefix=prefix, self_bot=True)
+IND = discord.Client()
+IND = commands.Bot(description='xD', command_prefix=prefix, self_bot=True)
 
-Arsky.antiraid = False
-Arsky.msgsniper = True
-Arsky.slotbot_sniper = True
-Arsky.giveaway_sniper = True
-Arsky.mee6 = False
-Arsky.mee6_channel = None
-Arsky.yui_kiss_user = None
-Arsky.yui_kiss_channel = None
-Arsky.yui_hug_user = None
-Arsky.yui_hug_channel = None
-Arsky.sniped_message_dict = {}
-Arsky.sniped_edited_message_dict = {}
-Arsky.whitelisted_users = {}
-Arsky.copycat = None
-Arsky.remove_command('help')
+IND.antiraid = False
+IND.msgsniper = True
+IND.slotbot_sniper = True
+IND.giveaway_sniper = True
+IND.mee6 = False
+IND.mee6_channel = None
+IND.yui_kiss_user = None
+IND.yui_kiss_channel = None
+IND.yui_hug_user = None
+IND.yui_hug_channel = None
+IND.sniped_message_dict = {}
+IND.sniped_edited_message_dict = {}
+IND.whitelisted_users = {}
+IND.copycat = None
+IND.remove_command('help')
 
 
-@Arsky.event
+@IND.event
 async def on_command_error(ctx, error):
     error_str = str(error)
     error = getattr(error, 'original', error)
@@ -257,9 +254,9 @@ async def on_command_error(ctx, error):
         ctx.send(f'[ERROR]: {error_str}', delete_after=3)
 
 
-@Arsky.event
+@IND.event
 async def on_message_edit(before, after):
-    await Arsky.process_commands(after)
+    await IND.process_commands(after)
 
 
 @Arsky.event
