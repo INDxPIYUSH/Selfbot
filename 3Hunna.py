@@ -44,7 +44,7 @@ class SELFBOT():
     __version__ = 1
 
 
-with open('config.json') as f:
+with open('settings.json') as f:
     config = json.load(f)
 
 token = config.get('token')
@@ -53,7 +53,7 @@ prefix = config.get('prefix')
 
 nitro_sniper = config.get('nitro_sniper')
 
-stream_url = "https://www.twitch.tv/souljaboy"
+stream_url = "URL_Here"
 tts_language = "en"
 
 start_time = datetime.datetime.utcnow()
@@ -129,11 +129,12 @@ def startprint():
         nitro = "Disabled"
 
     print(f'''{Fore.CYAN}
-████████ ██       ██ ████
-   ██    ██ ██    ██ ██  ██                                                                                       
-   ██    ██   ██  ██ ██   ██
-   ██    ██     ████ ██  ██
-████████ ██       ██ ████
+ ████████   ██       ██║ ████╗     ███████╗███████╗██╗     ███████╗██████╗  ██████╗ ████████  
+ ╚══██═══╝  ██ ██    ██║ ██  ██╗   ██╔════╝██╔════╝██║     ██╔════╝██╔══██╗██╔═══██╗╚══██╔══╝
+    ██║     ██║╚═██  ██║ ██   ██║  ███████╗█████╗  ██║     █████╗  ██████╔╝██║   ██║   ██║ 
+    ██║     ██║  ╚═████║ ██  ██╔╝  ╚════██║██╔══╝  ██║     ██╔══╝  ██╔══██╗██║   ██║   ██║
+ ████████╗  ██║    ╚═██║ ████╔╝    ███████║███████╗███████╗██║     ██████╔╝╚██████╔╝   ██║   
+ ╚═══════╝  ╚═╝      ╚═╝ ╚═══╝     ╚══════╝╚══════╝╚══════╝╚═╝     ╚═════╝  ╚═════╝    ╚═╝    
                        {Fore.CYAN}Arsky v{SELFBOT.__version__} | {Fore.CYAN}Logged in as: {Arsky.user.name}#{Arsky.user.discriminator} {Fore.CYAN}| ID: {Fore.CYAN}{Arsky.user.id}   
                        {Fore.CYAN}Nitro Sniper | {Fore.CYAN}{nitro}
                        {Fore.CYAN}Cached Users: {Fore.CYAN}{len(Arsky.users)}
